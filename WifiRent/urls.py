@@ -16,7 +16,9 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from prueba import urls as pruebaUrls
+from accounts import urls as accountsUrls
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(pruebaUrls, namespace="prueba")),
+    url(r'^', include(accountsUrls, namespace="accounts")),
 ]
