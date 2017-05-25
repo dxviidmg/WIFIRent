@@ -1,0 +1,11 @@
+{% extends 'base.html'%}
+
+{%block content%}
+
+{%for codigo in codigos%}
+<p>{{codigo.codigo}}</p>
+
+{%empty%}
+
+{%endfor%}
+{%endblock content%}

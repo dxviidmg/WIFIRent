@@ -1,0 +1,14 @@
+{% extends 'base.html'%}
+
+{%block content%}
+
+<h1>Lista de Planes</h1>
+
+<p>{%for plan in planes%}
+{{plan.nombre}}  {{plan.duracion}} {{plan.unidad_duracion}} {{plan.precio}} <a href="{{plan.get_absolute_url}}">Ver codigos</a></p>
+
+{%empty%}
+
+{%endfor%}
+
+{%endblock content%}
