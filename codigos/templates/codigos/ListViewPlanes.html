@@ -2,13 +2,43 @@
 
 {%block content%}
 
-<h1>Lista de Planes</h1>
+	<style type="text/css">	
+		th, td {
+			text-align: center;
+		}
+	</style>
 
-<p>{%for plan in planes%}
-{{plan.nombre}}  {{plan.duracion}} {{plan.unidad_duracion}} {{plan.precio}} <a href="{{plan.get_absolute_url}}">Ver codigos</a></p>
+	<h2>Lista de Planes</h2>
 
-{%empty%}
+	<div class="table-responsive text-center">
+		<table class="table">
+			<thead>
+				<th>Nombre</th>
+				<th>Duración</th>
+				<th>Precio</th>
+				<th>Acciones</th>
+			</thead>
+			<tbody>
 
-{%endfor%}
+	{%for plan in planes%}
+
+				<tr>
+					<td>{{plan.nombre}}</td>
+					<td>{{plan.duracion}} {{plan.unidad_duracion}}</td>
+					<td>$ {{plan.precio}} MXN</td>
+					<td><a href="{{plan.get_absolute_url}}">Ver códigos</a></td>
+				</tr>
+	
+	{%empty%}
+	
+				<tr>
+					<td colspan="4">No hay planes</td>
+				</tr>
+
+	{%endfor%}
+
+			</tbody>
+		</table>
+	</div>
 
 {%endblock content%}

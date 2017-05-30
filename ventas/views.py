@@ -9,6 +9,7 @@ class ViewVentaInicial(View):
 		template_name = "ventas/ViewVentaInicial.html"		
 
 		VentaForm = VentaCreateForm()
+
 		context = {
 			'VentaForm': VentaForm,
 		}
@@ -17,10 +18,12 @@ class ViewVentaInicial(View):
 		template_name = "ventas/ViewVentaInicial.html"
 		NuevaVentaForm = VentaCreateForm(request.POST)
 		codigo = Codigo.objects.get(codigo=codigo)
+		vendedor = User.objects.get(pk=request.user.pk)
 
 		if NuevaVentaForm.is_valid(): 
 			NuevaVenta = NuevaVentaForm.save(commit=False)
 			NuevaVenta.codigo = codigo
+			NuevaVenta.vendedor = vendedor
 			NuevaVenta.save()
 
 			codigo.status = 1

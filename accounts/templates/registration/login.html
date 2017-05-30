@@ -1,11 +1,24 @@
+{% extends 'base.html'%}
+
+{%block content%}
+
+
+<div class="row">
+		
+		<div class="col-12 text-center">
 			<form  class="form-group" action="{%url 'accounts:login'%}" method="post">
-				<h4 class="text-center">Inicio de sesión</h4>
-				
+				<h4 class="">Inicio de sesión</h4>
 				{%csrf_token%}
 				{{ form.as_p }}
-				
-				<div class="text-center">
+				<div class="">
 					<input type="hidden" name="next" value="{{next}}">
 					<input type="submit" value="Iniciar sesión">
 				</div>
-			</form>
+			</form>			
+		</div>
+
+</div>
+
+
+
+{%endblock content%}

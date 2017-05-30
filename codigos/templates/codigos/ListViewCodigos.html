@@ -2,10 +2,31 @@
 
 {%block content%}
 
-{%for codigo in codigos%}
-<p>{{codigo.codigo}} <a href="{% url 'ventas:ViewVentaInicial' codigo.codigo%}">Vender</a> </p>
+	<div class="table-responsive text-center">
+		<table class="table">
+			<thead>
+				<th>Código</th>
+				<th>Vender</th>
+			</thead>
+			<tbody>
 
-{%empty%}
+	{%for codigo in codigos%}
 
-{%endfor%}
+				<tr>
+					<td>{{codigo.codigo}}</td>
+					<td><a href="{% url 'ventas:ViewVentaInicial' codigo.codigo%}">Vender</a></td>
+				</tr>
+	
+	{%empty%}
+	
+				<tr>
+					<td colspan="2">No hay códigos</td>
+				</tr>
+
+	{%endfor%}
+
+			</tbody>
+		</table>
+	</div>
+
 {%endblock content%}

@@ -125,4 +125,5 @@ STATIC_URL = '/static/'
 
 from django.core.urlresolvers import reverse_lazy
 
+LOGIN_REDIRECT_URL = reverse_lazy('codigos:ListViewPlanes')
 LOGOUT_REDIRECT_URL = reverse_lazy('accounts:login')

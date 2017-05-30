@@ -20,7 +20,7 @@ class ListViewCodigos(View):
 	def get(self, request, slug):
 		template_name = "codigos/ListViewCodigos.html"
 		plan = Plan.objects.get(slug=slug)
-		codigos = Codigo.objects.filter(plan=plan)
+		codigos = Codigo.objects.filter(plan=plan, status=0)
 		context = {
 			'codigos': codigos
 		}
