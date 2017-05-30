@@ -18,9 +18,12 @@ from django.contrib import admin
 from prueba import urls as pruebaUrls
 from accounts import urls as accountsUrls
 from codigos import urls as codigosUrls
+from ventas import urls as ventasUrls
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(pruebaUrls, namespace="prueba")),
     url(r'^', include(accountsUrls, namespace="accounts")),
     url(r'^', include(codigosUrls, namespace="codigos")),
+    url(r'^', include(ventasUrls, namespace="ventas")),
 ]

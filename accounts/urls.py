@@ -4,7 +4,7 @@ from django.contrib.auth.views import login, logout, password_reset, password_re
 
 urlpatterns = [
 	url(r'^login', login,name="login"),
-#	url(r'^logout/$', logout, name="logout"),
+	url(r'^logout/$', logout, name="logout"),
 
 	url(r'^accounts/profile/$', views.ViewProfile.as_view(), name="ViewProfile"),
 #	url(r'^accounts/nuevo/$', views.CreateViewAccount.as_view(), name="CreateViewAccount"),	

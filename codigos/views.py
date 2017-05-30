@@ -17,9 +17,9 @@ class ListViewPlanes(View):
 
 class ListViewCodigos(View):
 	@method_decorator(login_required)
-	def get(self, request, pk):
+	def get(self, request, slug):
 		template_name = "codigos/ListViewCodigos.html"
-		plan = Plan.objects.get(pk=pk)
+		plan = Plan.objects.get(slug=slug)
 		codigos = Codigo.objects.filter(plan=plan)
 		context = {
 			'codigos': codigos

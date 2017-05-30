@@ -1,0 +1,11 @@
+{% extends 'base.html'%}
+
+{%block content%}
+
+{%for venta in ventas%}
+
+<p>{{venta.fecha}}</p>
+{%empty%}
+
+{%endfor%}
+{%endblock content%}

@@ -12,8 +12,6 @@ class Prueba(View):
 		my_cell = "+527721403616"
 		my_twilio = "+17862313408"
 
-		client = Client(account_sid, auth_token)
-		my_message = "Hola mundo"
-		message = client.messages.create(to=my_cell, from_=my_twilio, body=my_message)
+
 
 		return render(request,template_name)

@@ -3,7 +3,7 @@
 {%block content%}
 
 {%for codigo in codigos%}
-<p>{{codigo.codigo}}</p>
+<p>{{codigo.codigo}} <a href="{% url 'ventas:ViewVentaInicial' codigo.codigo%}">Vender</a> </p>
 
 {%empty%}
 
