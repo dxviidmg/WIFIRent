@@ -45,7 +45,7 @@ class ListViewVentas(View):
 	def get(self, request):
 		template_name = "ventas/ListViewVentas.html"		
 
-		ventas = Venta.objects.all()
+		ventas = Venta.objects.all().order_by('-fecha')[:30]
 
 		context = {
 			'ventas': ventas

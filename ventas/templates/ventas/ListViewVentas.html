@@ -2,10 +2,37 @@
 
 {%block content%}
 
-{%for venta in ventas%}
+	<div class="table-responsive text-center">
+		<table class="table">
+			<thead>
+				<th>Codigo</th>
+				<th>Teléfono</th>
+				<th>Precio</th>
+				<th>Fecha</th>
+				<th>Vendido por</th>
+			</thead>
+			<tbody>
 
-<p>{{venta.fecha}}</p>
-{%empty%}
+	{%for venta in ventas%}
 
-{%endfor%}
+				<tr>
+					<td>{{venta.codigo}}</td>
+					<td>{{venta.telefono}}</td>
+					<td>${{venta.codigo.plan.precio}} MXN</td>
+					<td>{{venta.fecha}}</td>
+					<td>{{venta.vendedor}}</td>
+				</tr>
+	
+	{%empty%}
+	
+				<tr>
+					<td colspan="4">No hay planes</td>
+				</tr>
+
+	{%endfor%}
+
+			</tbody>
+		</table>
+	</div>
+
 {%endblock content%}

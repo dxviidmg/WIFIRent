@@ -10,13 +10,16 @@
 
 	<h2>Lista de Planes</h2>
 
+
+<a href="{%url 'codigos:CreateViewPlan'%}">Nuevo plan</a>
+
 	<div class="table-responsive text-center">
 		<table class="table">
 			<thead>
 				<th>Nombre</th>
 				<th>Duración</th>
 				<th>Precio</th>
-				<th>Acciones</th>
+				<th colspan="2">Acciones</th>
 			</thead>
 			<tbody>
 
@@ -24,9 +27,11 @@
 
 				<tr>
 					<td>{{plan.nombre}}</td>
-					<td>{{plan.duracion}} {{plan.unidad_duracion}}</td>
-					<td>$ {{plan.precio}} MXN</td>
-					<td><a href="{{plan.get_absolute_url}}">Ver códigos</a></td>
+					<td>{{plan.duracion}} {%if plan.unidad_duracion == 1%} hora(s) {%elif plan.unidad_duracion == 2%} dia(s) {%elif plan.unidad_duracion == 3%} semanas(s) {%elif plan.unidad_duracion == 4%} mese(s) {%elif plan.unidad_duracion == 5%} año(s) {%endif%}</td>
+					<td>${{plan.precio}} MXN</td>
+					<td><a href="{%url 'codigos:ListViewCodigos' plan.slug%}">Ver Códigos</a></td>
+					<td><a href="{%url 'codigos:UpdateViewPlan' plan.slug%}">Actualizar</a></td>
+					<td><a href="{%url 'codigos:DeleteViewPlan' plan.slug%}">Borrar</a></td>
 				</tr>
 	
 	{%empty%}

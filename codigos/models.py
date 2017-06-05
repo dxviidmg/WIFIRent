@@ -22,11 +22,7 @@ class Plan(models.Model):
 	def __str__(self):
 		return '{} {} {}'.format(self.nombre ,self.duracion, self.unidad_duracion)
 
-	def get_absolute_url(self):
-		return reverse('codigos:ListViewCodigos', kwargs={'slug': self.slug})
-
 class Codigo(models.Model):
-
 	status_choices = (
 		(0, "Disponible"),
 		(1, "Vendido"),	)

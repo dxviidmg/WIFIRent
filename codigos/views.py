@@ -4,6 +4,9 @@ from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import *
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.urlresolvers import reverse_lazy
+from .forms import *
 
 class ListViewPlanes(View):
 	@method_decorator(login_required)
@@ -21,7 +24,38 @@ class ListViewCodigos(View):
 		template_name = "codigos/ListViewCodigos.html"
 		plan = Plan.objects.get(slug=slug)
 		codigos = Codigo.objects.filter(plan=plan, status=0)
+		codigoForm = CodigoCreateForm()
 		context = {
-			'codigos': codigos
+			'codigos': codigos,
+			'codigoForm': codigoForm
 		}
 		return render(request,template_name, context)
+
+	def post(self,request, slug):
+		template_name = "codigos/ListViewCodigos.html"
+		plan = Plan.objects.get(slug=slug)
+
+
+		codigoForm = CodigoCreateForm(request.POST)
+		if codigoForm.is_valid():
+			nuevoCodigo = codigoForm.save(commit=False)
+			nuevoCodigo.plan = plan
+			nuevoCodigo.save()
+		return redirect("codigos:ListViewCodigos", slug=plan.slug) 		
+#		return render(request,template_name)
+#Creación de un plan
+class CreateViewPlan(CreateView):
+	model = Plan
+	success_url = reverse_lazy('accounts:ListViewPlanes')
+	fields = ['nombre', 'duracion', 'unidad_duracion', 'precio']
+
+#Modificación de un plan
+class UpdateViewPlan(UpdateView):
+	model = Plan
+	success_url = reverse_lazy('accounts:ListViewPlanes')
+	fields = ['nombre', 'duracion', 'unidad_duracion', 'precio']
+
+#Eliminación de un plan
+class DeleteViewPlan(DeleteView):
+	model = Plan
+	success_url = reverse_lazy('accounts:ListViewPlanes')

@@ -3,14 +3,6 @@
 {%block content%}
 
 
-
-	<form action="." method="post">
-		{%csrf_token%}
-		{{codigoForm.as_p}}
-		<a href="#"><input type="submit" value="Crear"></a>
-	</form>
-
-
 	<div class="table-responsive text-center">
 		<table class="table">
 			<thead>
@@ -19,11 +11,12 @@
 			</thead>
 			<tbody>
 
-	{%for codigo in codigos%}
+	{%for user in users%}
 
 				<tr>
-					<td>{{codigo.codigo|slice:": -4"}}********</td>
-					<td><a href="{% url 'ventas:ViewVentaInicial' codigo.codigo%}">Vender</a></td>
+					<td>{{user.get_full_name}}</td>
+					<td>Editar</td>
+					<td>Borrar</td>
 				</tr>
 	
 	{%empty%}
