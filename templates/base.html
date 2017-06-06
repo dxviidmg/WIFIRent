@@ -26,14 +26,20 @@
 		<ul class="nav navbar-nav navbar-right">
 			<li><a href="{%url 'accounts:logout'%}">Salir</a></li>
 		</ul>
+		
+		{%if request.user.is_staff%}
+
 		<ul class="nav navbar-nav navbar-right">
 			<li><a href="{%url 'accounts:ListViewUsers'%}">Usuarios</a></li>
 		</ul>
+
+		{%endif%}
+		
 		<ul class="nav navbar-nav navbar-right">
-			<li><a href="{%url 'ventas:ListViewVentas'%}">Historial</a></li>
+			<li><a href="{%url 'ventas:ListViewVentas'%}">Historial de ventas</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
-			<li><a href="{%url 'codigos:ListViewPlanes'%}">Códigos</a></li>
+			<li><a href="{%url 'codigos:ListViewPlanes'%}">Planes</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<li><a href="{%url 'accounts:ViewProfile'%}">Perfil</a></li>

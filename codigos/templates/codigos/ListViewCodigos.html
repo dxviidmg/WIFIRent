@@ -2,7 +2,7 @@
 
 {%block content%}
 
-
+	{%if request.user.is_staff%}
 
 	<form action="." method="post">
 		{%csrf_token%}
@@ -10,12 +10,13 @@
 		<a href="#"><input type="submit" value="Crear"></a>
 	</form>
 
+	{%endif%}
 
 	<div class="table-responsive text-center">
 		<table class="table">
 			<thead>
 				<th>Código</th>
-				<th>Vender</th>
+				<th>Acciones</th>
 			</thead>
 			<tbody>
 

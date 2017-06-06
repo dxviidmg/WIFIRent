@@ -12,11 +12,12 @@ class Plan(models.Model):
 		(4, "Mese(s)"),
 		(5, "Año(s)"),
 	)	
-	duracion = models.IntegerField()
-	unidad_duracion = models.IntegerField(choices=unidad_duracion_choices)
+	duracion = models.IntegerField(verbose_name='Duración')
+	unidad_duracion = models.IntegerField(choices=unidad_duracion_choices, verbose_name='Unidad de tiempo')
 	precio = models.DecimalField(max_digits=6,decimal_places=2)
 	slug = models.SlugField(max_length=40)
-	
+	codigos_disponibles = models.IntegerField(default=0)
+
 	class Meta:
 		ordering = ['unidad_duracion', 'duracion']
 
@@ -26,6 +27,11 @@ class Plan(models.Model):
 	def save(self):
 		self.slug = slugify(self.nombre)
 		super(Plan, self).save()
+
+	def CodigosDisponibles(self):
+		plan = Plan.objects.get(pk=self.pk)
+		self.codigos_disponibles = Codigo.objects.filter(plan=plan, status=0).count()
+		self.save()
 
 class Codigo(models.Model):
 	status_choices = (

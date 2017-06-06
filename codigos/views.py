@@ -42,7 +42,6 @@ class ListViewCodigos(View):
 			nuevoCodigo.plan = plan
 			nuevoCodigo.save()
 		return redirect("codigos:ListViewCodigos", slug=plan.slug) 		
-#		return render(request,template_name)
 
 #Creación de un plan
 class CreateViewPlan(CreateView):
@@ -56,7 +55,7 @@ class UpdateViewPlan(UpdateView):
 	success_url = reverse_lazy('codigos:ListViewPlanes')
 	fields = ['nombre', 'duracion', 'unidad_duracion', 'precio']
 
-#Eliminación de un plan
+#Borrado de un plan
 class DeleteViewPlan(DeleteView):
 	model = Plan
 	success_url = reverse_lazy('codigos:ListViewPlanes')

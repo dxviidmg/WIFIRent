@@ -3,9 +3,9 @@
 {%block content%}
 
 	{%if object%}
-	<h4>Edita el programa <i>{{object}}</i></h4>
+	<h4>Edita el plan <strong><i>{{object.nombre}}<i></strong></h4>
 	{%else%}
-	<h4>Crea un programa</h4>
+	<h4>Crea un plan</h4>
 	{%endif%}
 
 	<form method="post" enctype="multipart/form-data">
