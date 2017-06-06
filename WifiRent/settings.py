@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'prueba',
     'accounts',
     'codigos',
-    'ventas'
+    'ventas',
+    'bootstrapform',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,5 @@ from django.core.urlresolvers import reverse_lazy
 
 LOGIN_REDIRECT_URL = reverse_lazy('codigos:ListViewPlanes')
 LOGOUT_REDIRECT_URL = reverse_lazy('accounts:login')
+ 
+STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)

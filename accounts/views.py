@@ -16,7 +16,7 @@ class ViewProfile(View):
 class ListViewUsers(View):
 	def get(self, request):
 		template_name = "accounts/ListViewUsers.html"
-		users = User.objects.all()
+		users = User.objects.exclude(pk=request.user.pk)
 		context = {
 			'users': users,
 		}

@@ -1,16 +1,18 @@
 {% extends 'base.html'%}
 
+{% load bootstrap %}
+
 {%block content%}
 
 	{%if object%}
-	<h4>Edita el programa <i>{{object}}</i></h4>
+	<h4>Edita el empleado <i>{{object}}</i></h4>
 	{%else%}
-	<h4>Crea un programa</h4>
+	<h4>Crea un empleado</h4>
 	{%endif%}
 
 	<form method="post" enctype="multipart/form-data">
 		{%csrf_token%}
-		{{userForm.as_p}}
+		{{userForm|bootstrap}}
 		<input type="submit" value="{%if object%}Guardar cambios{%else%}Crear{%endif%}">
 
 		<a href="{%url 'accounts:ListViewUsers'%}"><input class="" type="button" value="Cancelar"></a>

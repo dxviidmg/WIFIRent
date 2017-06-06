@@ -1,13 +1,24 @@
 {% extends 'base.html'%}
 
+{% load bootstrap %}
+
 {%block content%}
 
 
 	<h4>Registro de nueva venta</h4>
+
+	{% for message in messages %}
+    <div class="alert alert-{{ message.tags }} text-center">{{ message }}</div>
+	{% endfor %}    
+	
 	<form action="." method="post">
 		{%csrf_token%}
-		{{VentaForm.as_p}}
+		{{VentaForm|bootstrap}}
 		<input type="submit" value="Vender">
 	</form>
+
+
+	
+
 
 {%endblock content%}

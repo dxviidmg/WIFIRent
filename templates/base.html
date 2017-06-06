@@ -1,61 +1,53 @@
+{%load static%}
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<title></title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="{%static 'css/bootstrap.min.css'%}">
+
+		<link rel="stylesheet" type="text/css" href="{%static 'css/font-awesome.min.css'%}">
+
+		<link rel="stylesheet" type="text/css" href="{%static 'css/estilos.css'%}">
 	</head>
 	<body>
 
-	<nav class="navbar navbar-default">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#">WifiRent</a>
-		</div>
-
-	<!-- Collect the nav links, forms, and other content for toggling -->
-	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		
-   {%if request.user.is_authenticated%}
-
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="{%url 'accounts:logout'%}">Salir</a></li>
+	<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<a class="navbar-brand" href="#">WifiRent</a>
+		<ul class="navbar-nav mr-auto">
 		</ul>
-		
-		{%if request.user.is_staff%}
+		{%if request.user.is_authenticated%}
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="nav-link" href="{%url 'codigos:ListViewPlanes'%}">Planes</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{%url 'ventas:ListViewVentas'%}">Historial</a>
+			</li>
 
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="{%url 'accounts:ListViewUsers'%}">Usuarios</a></li>
+			{%if request.user.is_staff%}
+			<li class="nav-item">
+				<a class="nav-link" href="{%url 'accounts:ListViewUsers'%}">Usuarios</a>
+			</li>      
+			{%endif%}
+			<li class="nav-item">
+				<a class="nav-link" href="{%url 'accounts:logout'%}">Salir</a>
+			</li>
 		</ul>
-
 		{%endif%}
-		
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="{%url 'ventas:ListViewVentas'%}">Historial de ventas</a></li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="{%url 'codigos:ListViewPlanes'%}">Planes</a></li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<li><a href="{%url 'accounts:ViewProfile'%}">Perfil</a></li>
-		</ul>  
-
-		{%endif%}
-		
-		</div><!-- /.navbar-collapse -->
 	</nav>
-	<div class="container">
-	    <br>
+
+		<div class="container">
+		    <br>
+			
+			{%block content%}
+			{%endblock content%}
 		
-		{%block content%}
-		{%endblock content%}
-	
-	</div>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		</div>
+        <script type="text/javascript" src="{%static 'js/jquery.js'%}"></script>
+        <script type="text/javascript" src="{%static 'js/bootstrap.min.js'%}"></script>
 	</body>
 </html>

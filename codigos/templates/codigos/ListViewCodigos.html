@@ -1,12 +1,14 @@
 {% extends 'base.html'%}
 
+{% load bootstrap %}
+
 {%block content%}
 
 	{%if request.user.is_staff%}
 
 	<form action="." method="post">
 		{%csrf_token%}
-		{{codigoForm.as_p}}
+		{{codigoForm|bootstrap}}
 		<a href="#"><input type="submit" value="Crear"></a>
 	</form>
 

@@ -1,5 +1,7 @@
 {% extends 'base.html'%}
 
+{% load bootstrap %}
+
 {%block content%}
 
 	{%if object%}
@@ -10,7 +12,7 @@
 
 	<form method="post" enctype="multipart/form-data">
 		{%csrf_token%}
-		{{form.as_p}}
+		{{form|bootstrap}}
 		<input type="submit" value="{%if object%}Guardar cambios{%else%}Crear{%endif%}">
 
 		<a href="{%url 'codigos:ListViewPlanes'%}"><input class="" type="button" value="Cancelar"></a>

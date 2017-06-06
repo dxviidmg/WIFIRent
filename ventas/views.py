@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 from .forms import *
 from twilio.rest import Client
+from django.contrib import messages
 
 class ViewVentaInicial(View):
 #	@method_decorator(login_required)
@@ -39,6 +40,7 @@ class ViewVentaInicial(View):
 			my_message = NuevaVenta.codigo
 			message = client.messages.create(to=my_cell, from_=my_twilio, body=my_message)
 
+			messages.success(request, "¡¡¡Mensaje enviado!!!")
 		return redirect("ventas:ViewVentaInicial", codigo)
 
 class ListViewVentas(View):
