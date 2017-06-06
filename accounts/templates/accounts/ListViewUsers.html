@@ -3,11 +3,13 @@
 {%block content%}
 
 
+<a href="{%url 'accounts:CreateViewUser'%}">Crear usuario</a>
+
 	<div class="table-responsive text-center">
 		<table class="table">
 			<thead>
-				<th>Código</th>
-				<th>Vender</th>
+				<th>Nombre</th>
+				<th>Acciones</th>
 			</thead>
 			<tbody>
 
@@ -15,8 +17,7 @@
 
 				<tr>
 					<td>{{user.get_full_name}}</td>
-					<td>Editar</td>
-					<td>Borrar</td>
+					<td><a href="{%url 'accounts:DeleteViewUser' user.pk%}">Borrar</a></td>
 				</tr>
 	
 	{%empty%}

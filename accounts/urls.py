@@ -8,6 +8,7 @@ urlpatterns = [
 
 	url(r'^accounts/profile/$', views.ViewProfile.as_view(), name="ViewProfile"),
 
-#	url(r'^users/nuevo/$', views.CreateViewUser.as_view(), name="CreateViewUser"),
+	url(r'^user/eliminar/(?P<pk>\d+)/$', views.DeleteViewUser.as_view(), name="DeleteViewUser"),
+	url(r'^user/nuevo/$', views.CreateViewUser.as_view(), name="CreateViewUser"),
 	url(r'^users/$', views.ListViewUsers.as_view(), name="ListViewUsers"),
     ]

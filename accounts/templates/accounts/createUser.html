@@ -1,0 +1,19 @@
+{% extends 'base.html'%}
+
+{%block content%}
+
+	{%if object%}
+	<h4>Edita el programa <i>{{object}}</i></h4>
+	{%else%}
+	<h4>Crea un programa</h4>
+	{%endif%}
+
+	<form method="post" enctype="multipart/form-data">
+		{%csrf_token%}
+		{{userForm.as_p}}
+		<input type="submit" value="{%if object%}Guardar cambios{%else%}Crear{%endif%}">
+
+		<a href="{%url 'accounts:ListViewUsers'%}"><input class="" type="button" value="Cancelar"></a>
+	</form>
+
+{%endblock content%}

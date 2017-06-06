@@ -5,10 +5,10 @@
 	<div class="row justify-content-center text-center">
 		<div class="col-xs-12">
 			<form method="post">
-				<p>¿Estas seguro de querer borrar el plan <em>{{object.nombre}}</em>?</p>
+				<p>¿Estas seguro de querer borrar al usuario <em>{{object.get_full_name}}</em>?</p>
 				{%csrf_token%}
 				<input type="submit" value="Si">
-				<a href="{%url 'codigos:ListViewPlanes'%}"><input type="button" value="Cancelar"></a>
+				<a href="{%url 'accounts:ListViewUsers'%}"><input type="button" value="Cancelar"></a>
 			</form>
 		</div>
 	</div>

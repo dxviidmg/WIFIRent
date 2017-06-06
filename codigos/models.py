@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.core.urlresolvers import reverse
+from django.template.defaultfilters import slugify
 
 class Plan(models.Model):
 	nombre = models.CharField(max_length=20)
@@ -22,17 +23,21 @@ class Plan(models.Model):
 	def __str__(self):
 		return '{} {} {}'.format(self.nombre ,self.duracion, self.unidad_duracion)
 
+	def save(self):
+		self.slug = slugify(self.nombre)
+		super(Plan, self).save()
+
 class Codigo(models.Model):
 	status_choices = (
 		(0, "Disponible"),
 		(1, "Vendido"),	)
 	codigo = models.CharField(max_length=20)
 	plan = models.ForeignKey(Plan, null=True)
-
 	creacion = models.DateTimeField(default=timezone.now)
 	status = models.IntegerField(choices=status_choices, default=0)
-#	class Meta:
-#		ordering = ['unidad_duracion', 'duracion', 'creacion']
+
+	class Meta:
+		ordering = ['creacion']
 
 	def __str__(self):
 		return '{}'.format(self.codigo)
