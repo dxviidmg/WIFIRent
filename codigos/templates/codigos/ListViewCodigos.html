@@ -6,13 +6,19 @@
 
 	{%if request.user.is_staff%}
 
-	<form action="." method="post">
-		{%csrf_token%}
-		{{codigoForm|bootstrap}}
-		<a href="#"><input type="submit" value="Crear"></a>
-	</form>
+	<div class="espacio">
+		<h2>Registro de códigos</h2>
+
+		<form action="." method="post">
+			{%csrf_token%}
+			{{codigoForm|bootstrap}}
+			<a href="#"><input type="submit" value="Registrar"></a>
+		</form>
+	</div>
 
 	{%endif%}
+
+	<h1>Lista de códigos del plan {{plan.nombre}}</h1>
 
 	<div class="table-responsive text-center">
 		<table class="table">

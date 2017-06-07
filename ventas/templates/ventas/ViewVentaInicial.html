@@ -4,11 +4,12 @@
 
 {%block content%}
 
-
 	<h4>Registro de nueva venta</h4>
 
 	{% for message in messages %}
+    
     <div class="alert alert-{{ message.tags }} text-center">{{ message }}</div>
+	
 	{% endfor %}    
 	
 	<form action="." method="post">
@@ -16,9 +17,5 @@
 		{{VentaForm|bootstrap}}
 		<input type="submit" value="Vender">
 	</form>
-
-
-	
-
 
 {%endblock content%}

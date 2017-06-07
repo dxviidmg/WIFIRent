@@ -26,6 +26,7 @@ class ListViewCodigos(View):
 		codigos = Codigo.objects.filter(plan=plan, status=0)
 		codigoForm = CodigoCreateForm()
 		context = {
+			'plan': plan,
 			'codigos': codigos,
 			'codigoForm': codigoForm
 		}

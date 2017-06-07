@@ -2,14 +2,14 @@
 
 {%block content%}
 
-
-
 	<h1>Lista de Planes</h1>
 
 	{%if request.user.is_staff%}
 
-	<a href="{%url 'codigos:CreateViewPlan'%}">Crear plan</a>
-
+	<div class="espacio">
+		<a href="{%url 'codigos:CreateViewPlan'%}">Crear plan</a>
+	</div>
+	
 	{%endif%}
 
 	<div class="table-responsive text-center">

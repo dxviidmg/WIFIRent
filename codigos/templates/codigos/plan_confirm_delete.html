@@ -2,11 +2,15 @@
 
 {%block content%}
 
+	<div class="row justify-content-md-center">	
+		<div class="col-md-8 text-center">
 			<form method="post">
-				<h4>¿Estas seguro de querer borrar el plan <strong><i>{{object.nombre}}<i></strong>?</h4>
+				<h4>¿Estas seguro de querer borrar el plan <strong><i>{{object.nombre}}</i></strong>?</h4>
 				{%csrf_token%}
 				<input type="submit" value="Si">
 				<a href="{%url 'codigos:ListViewPlanes'%}"><input type="button" value="Cancelar"></a>
 			</form>
+		</div>
+	</div>
 
 {%endblock content%}

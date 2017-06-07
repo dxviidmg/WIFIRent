@@ -4,10 +4,8 @@
 
 {%block content%}
 
-
-<div class="row">
-		
-		<div class="col-12 text-center">
+	<div class="row justify-content-md-center">	
+		<div class="col-md-5 text-center">
 			<form  class="form-group" action="{%url 'accounts:login'%}" method="post">
 				<h4 class="">Inicio de sesión</h4>
 				{%csrf_token%}
@@ -18,8 +16,7 @@
 				</div>
 			</form>			
 		</div>
-
-</div>
+	</div>
 
 
 

@@ -13,31 +13,47 @@
 	<body>
 
 	<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+
+		{%if request.user.is_authenticated%}
+
+		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand" href="#">WifiRent</a>
-		<ul class="navbar-nav mr-auto">
-		</ul>
-		{%if request.user.is_authenticated%}
-		<ul class="navbar-nav">
-			<li class="nav-item">
-				<a class="nav-link" href="{%url 'codigos:ListViewPlanes'%}">Planes</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="{%url 'ventas:ListViewVentas'%}">Historial</a>
-			</li>
 
-			{%if request.user.is_staff%}
-			<li class="nav-item">
-				<a class="nav-link" href="{%url 'accounts:ListViewUsers'%}">Usuarios</a>
-			</li>      
-			{%endif%}
-			<li class="nav-item">
-				<a class="nav-link" href="{%url 'accounts:logout'%}">Salir</a>
-			</li>
-		</ul>
 		{%endif%}
+
+		<a class="navbar-brand" href="#">WifiRent</a>
+
+		<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+			<ul class="navbar-nav mr-auto mt-2 mt-md-0">
+			</ul>
+
+			{%if request.user.is_authenticated%}
+
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" href="{%url 'codigos:ListViewPlanes'%}">Planes</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{%url 'ventas:ListViewVentas'%}">Historial</a>
+				</li>
+
+				{%if request.user.is_staff%}
+		
+				<li class="nav-item">
+					<a class="nav-link" href="{%url 'accounts:ListViewUsers'%}">Empleados</a>
+				</li>      
+		
+				{%endif%}
+		
+				<li class="nav-item">
+					<a class="nav-link" href="{%url 'accounts:logout'%}">Salir</a>
+				</li>
+			</ul>
+
+			{%endif%}
+
+		</div>
 	</nav>
 
 		<div class="container">

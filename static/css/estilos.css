@@ -1,8 +1,11 @@
-h1, h2, h3, h4{
+h1, h4{
 	text-align: center;
-	padding-bottom: 15px;
 }
 
-th, td {
+th {
 	text-align: center;
+}
+
+.espacio {
+	padding-bottom: 20px;
 }
