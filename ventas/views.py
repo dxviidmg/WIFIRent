@@ -31,8 +31,8 @@ class ViewVentaInicial(View):
 			codigo.save()
 
 			#TWILIO
-			account_sid = "ACb647615f13f91027220977cf00e2222b"
-			auth_token = "054e4c9c8bc8d103b8fce36ec556da1b"
+			account_sid = "AC6632ff16a27f7eaa259469bd474cdf05"
+			auth_token = "f36b4971dc478cc2954732685c6d1a68"
 			my_cell = "+52" + NuevaVenta.telefono
 			my_twilio = "+17862313408"
 
