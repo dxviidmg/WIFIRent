@@ -13,36 +13,45 @@ class ViewProfile(View):
 		template_name = "accounts/profile.html"		
 		return render(request,template_name)
 
-class ListViewUsers(View):
+class ListViewNegocios(View):
 	def get(self, request):
-		template_name = "accounts/ListViewUsers.html"
-		users = User.objects.exclude(pk=request.user.pk)
+		template_name = "accounts/ListViewNegocios.html"
+		Negocios = User.objects.exclude(pk=request.Negocio.pk)
 		context = {
-			'users': users,
+			'Negocios': Negocios,
 		}
 		return render(request,template_name, context)
 
 #Creación de un usuario
-class CreateViewUser(View):
+class CreateViewNegocio(View):
 	@method_decorator(login_required)
 	def get(self, request):
-		template_name = "accounts/createUser.html"
+		template_name = "accounts/createNegocio.html"
 		
-		userForm = UserCreateForm()
+		NegocioForm = NegocioCreateForm()
 		
 		context = {
-			'userForm': userForm,
+			'NegocioForm': NegocioForm,
 		}
 		return render(request,template_name,context)
 	def post(self,request):
-		userForm = UserCreateForm(request.POST)
-		if userForm.is_valid():
-			nuevoUser = userForm.save(commit=False)
-			nuevoUser.set_password(userForm.cleaned_data['password'])
-			nuevoUser.save()
-		return redirect('accounts:ListViewUsers')
+		NegocioForm = NegocioCreateForm(request.POST)
+		if NegocioForm.is_valid():
+			nuevoNegocio = NegocioForm.save(commit=False)
+			nuevoNegocio.set_password(NegocioForm.cleaned_data['password'])
+			nuevoNegocio.save()
+		return redirect('accounts:ListViewNegocios')
 
 #Eliminar usuario
-class DeleteViewUser(DeleteView):
+class DeleteViewNegocio(DeleteView):
 	model = User
-	success_url = reverse_lazy('accounts:ListViewUsers')
+	success_url = reverse_lazy('accounts:ListViewNegocios')
+
+class ListViewNegocios(View):
+	def get(self, request):
+		template_name = "accounts/listViewNegocios.html"
+		negocios = User.objects.filter(perfil__tipo="Negocio")
+		context = {
+			'negocios': negocios
+		}
+		return render(request,template_name,context)

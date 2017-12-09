@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
 
 class Plan(models.Model):
 	nombre = models.CharField(max_length=20)
@@ -17,7 +18,7 @@ class Plan(models.Model):
 	precio = models.DecimalField(max_digits=6,decimal_places=2)
 	slug = models.SlugField(max_length=40)
 	codigos_disponibles = models.IntegerField(default=0)
-
+	negocio = models.ForeignKey(User, null=True, blank=True)
 	class Meta:
 		ordering = ['unidad_duracion', 'duracion']
 

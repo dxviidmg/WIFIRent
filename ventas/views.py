@@ -31,10 +31,10 @@ class ViewVentaInicial(View):
 			codigo.save()
 
 			#TWILIO
-			account_sid = "AC6632ff16a27f7eaa259469bd474cdf05"
-			auth_token = "f36b4971dc478cc2954732685c6d1a68"
+			account_sid = ""
+			auth_token = ""
 			my_cell = "+52" + NuevaVenta.telefono
-			my_twilio = "+17862313408"
+			my_twilio = ""
 
 			client = Client(account_sid, auth_token)
 			my_message = NuevaVenta.codigo

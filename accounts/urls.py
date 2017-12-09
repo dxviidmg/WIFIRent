@@ -8,7 +8,7 @@ urlpatterns = [
 
 	url(r'^accounts/profile/$', views.ViewProfile.as_view(), name="ViewProfile"),
 
-	url(r'^user/eliminar/(?P<pk>\d+)/$', views.DeleteViewUser.as_view(), name="DeleteViewUser"),
-	url(r'^user/nuevo/$', views.CreateViewUser.as_view(), name="CreateViewUser"),
-	url(r'^users/$', views.ListViewUsers.as_view(), name="ListViewUsers"),
+	url(r'^negocio/eliminar/(?P<pk>\d+)/$', views.DeleteViewNegocio.as_view(), name="DeleteViewNegocio"),
+	url(r'^negocio/nuevo/$', views.CreateViewNegocio.as_view(), name="CreateViewNegocio"),
+	url(r'^negocios/$', views.ListViewNegocios.as_view(), name="ListViewNegocios"),	
     ]

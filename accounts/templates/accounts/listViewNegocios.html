@@ -1,0 +1,49 @@
+{% extends 'base.html'%}
+
+{% load bootstrap %}
+
+{%block content%}
+
+<div class="table-responsive">
+	<table class="table">
+		<thead>
+		<tr>
+			<th>Usuario</th>
+			<th>Nombre</th>
+			<th>Domicilio</th>
+			<th>Municipio</th>
+			<th>Estado</th>
+			<th>Código postal</th>
+			<th>Códigos disponibles</th>
+			<th>Opciones</th>
+		</tr>
+		</thead>
+		<tbody>
+			{%for negocio in negocios%}
+			<tr>
+				<td>
+					{{negocio.username}}
+				</td>
+				<td>
+					{{negocio.first_name}}
+				</td>
+				<td>
+					{{negocio.perfil.domicilio}}
+				</td>
+				<td>
+					{{negocio.perfil.municipio}}
+				</td>
+				<td>
+					{{negocio.perfil.estado}}
+				</td>
+				<td>
+					{{negocio.perfil.codigo_postal}}
+				</td>
+				<td>Pendiente</td>
+				<td><a href="{%url 'accounts:DeleteViewNegocio' negocio.pk%}">Borrar</a></td>
+			</tr>
+			{%endfor%}
+		</tbody>
+	</table>
+</div>
+{%endblock content%}
