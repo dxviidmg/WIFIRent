@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
@@ -12,9 +12,10 @@ class ListViewPlanes(View):
 	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "codigos/ListViewPlanes.html"		
-		planes = Plan.objects.all()
+#		negocio = get_object_or_404(User, pk=pk)
+#		planes = Plan.objects.filter(negocio=negocio)
 		context = {
-			'planes': planes
+#			'planes': planes
 		}
 		return render(request,template_name, context)
 

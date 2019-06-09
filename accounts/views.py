@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from .forms import *
 from django.views.generic.edit import DeleteView
 from django.core.urlresolvers import reverse_lazy
+import datetime
 
 class ViewProfile(View):
 	@method_decorator(login_required)
@@ -28,18 +29,30 @@ class CreateViewNegocio(View):
 	def get(self, request):
 		template_name = "accounts/createNegocio.html"
 		
-		NegocioForm = NegocioCreateForm()
-		
+		NuevoUserNegocioForm = NegocioUserCreateForm()
+		NuevoPerfilNegocioForm = NegocioPerfilCreateForm()
 		context = {
-			'NegocioForm': NegocioForm,
+			'NuevoUserNegocioForm': NuevoUserNegocioForm,
+			'NuevoPerfilNegocioForm': NuevoPerfilNegocioForm,			
 		}
 		return render(request,template_name,context)
 	def post(self,request):
-		NegocioForm = NegocioCreateForm(request.POST)
-		if NegocioForm.is_valid():
-			nuevoNegocio = NegocioForm.save(commit=False)
-			nuevoNegocio.set_password(NegocioForm.cleaned_data['password'])
-			nuevoNegocio.save()
+		NuevoUserNegocioForm = NegocioUserCreateForm(request.POST)
+		NuevoPerfilNegocioForm = NegocioPerfilCreateForm(request.POST)
+		dia = datetime.datetime.today().strftime('%d')
+		userLast = User.objects.last()
+
+		if NuevoUserNegocioForm.is_valid():
+			NuevoUserNegocio = NuevoUserNegocioForm.save(commit=False)
+			NuevoUserNegocio.username = "N" + str(dia) + str(userLast.pk+1)
+			NuevoUserNegocio.set_password(NuevoUserNegocioForm.cleaned_data['password'])
+			NuevoUserNegocio.save()
+
+#		if NuevoPerfilNegocioForm.is_valid():
+			NuevoPerfilNegocio = NuevoPerfilNegocioForm.save(commit=False)
+			NuevoPerfilNegocio.user = NuevoUserNegocio
+			NuevoPerfilNegocio.save()
+
 		return redirect('accounts:ListViewNegocios')
 
 #Eliminar usuario
@@ -50,7 +63,7 @@ class DeleteViewNegocio(DeleteView):
 class ListViewNegocios(View):
 	def get(self, request):
 		template_name = "accounts/listViewNegocios.html"
-		negocios = User.objects.filter(perfil__tipo="Negocio")
+		negocios = User.objects.filter(username__startswith="N")
 		context = {
 			'negocios': negocios
 		}

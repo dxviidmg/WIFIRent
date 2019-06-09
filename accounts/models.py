@@ -12,6 +12,7 @@ class Perfil(models.Model):
 	)
 	user = models.OneToOneField(User)
 	domicilio = models.CharField(max_length=50, null=True, blank=True)
+	telefono = models.CharField(max_length=20, null=True, blank=True)	
 	codigo_postal = models.IntegerField(null=True, blank=True)
 	municipio = models.CharField(max_length=30, null=True, blank=True)
 	estado = models.CharField(max_length=30, choices=Estado_choices, default="Hidalgo")

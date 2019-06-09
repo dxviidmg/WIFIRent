@@ -1,13 +1,13 @@
 from django import forms
 from .models import *
 
-class UserCreateForm(forms.ModelForm):
+class NegocioUserCreateForm(forms.ModelForm):
 	password = forms.CharField(label='Password',widget=forms.PasswordInput)
 	password2 = forms.CharField(label='Repite tu password',widget=forms.PasswordInput)
 
 	class Meta:
 		model = User
-		fields = ('username','first_name', 'last_name', 'email',)
+		fields = ('first_name', 'email',)
 	
 	def clean_password2(self):
 		cd = self.cleaned_data
@@ -22,3 +22,9 @@ class UserCreateForm(forms.ModelForm):
 	    except User.DoesNotExist:
 	        return username
 	    raise forms.ValidationError(u'El usuario "%s" ya esta en uso.' % username)
+
+class NegocioPerfilCreateForm(forms.ModelForm):
+	class Meta:
+		model = Perfil
+		fields = ('telefono', 'domicilio', 'codigo_postal', 'municipio', 'estado')
+		

@@ -4,6 +4,9 @@
 
 {%block content%}
 
+
+<a href="{%url 'accounts:CreateViewNegocio'%}">Crear negocio</a>
+
 <div class="table-responsive">
 	<table class="table">
 		<thead>
@@ -15,7 +18,7 @@
 			<th>Estado</th>
 			<th>Código postal</th>
 			<th>Códigos disponibles</th>
-			<th>Opciones</th>
+			<th colspan="2">Opciones</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -40,6 +43,7 @@
 					{{negocio.perfil.codigo_postal}}
 				</td>
 				<td>Pendiente</td>
+				<td><a href="{%url 'codigos:ListViewPlanes' negocio.pk%}">Ver detalle</a></td>
 				<td><a href="{%url 'accounts:DeleteViewNegocio' negocio.pk%}">Borrar</a></td>
 			</tr>
 			{%endfor%}
