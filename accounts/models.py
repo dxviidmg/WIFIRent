@@ -6,18 +6,21 @@ def get_full_name(self):
 
 User.add_to_class("__str__", get_full_name)
 
-class Perfil(models.Model):	
+class PuntoDeVenta(models.Model):	
 	Estado_choices = (
 		("Hidalgo", "Hidalgo"),
+		("Querétaro", "Querétaro"),
 	)
 	user = models.OneToOneField(User)
-	domicilio = models.CharField(max_length=50, null=True, blank=True)
-	telefono = models.CharField(max_length=20, null=True, blank=True)	
-	codigo_postal = models.IntegerField(null=True, blank=True)
-	municipio = models.CharField(max_length=30, null=True, blank=True)
+	nombre = models.CharField(max_length=50)
+	domicilio = models.TextField()
+	codigo_postal = models.IntegerField()
+	municipio = models.CharField(max_length=50)
 	estado = models.CharField(max_length=30, choices=Estado_choices, default="Hidalgo")
-	tipo = models.CharField(max_length=10, null=True, blank=True)
-
+	telefono = models.CharField(max_length=20)
 
 	def __str__(self):
-		return '{}'.format(self.user)
+		return '{} de {}'.format(self.nombre, self.user)
+
+	class Meta:
+		verbose_name_plural = 'Puntos de venta'	

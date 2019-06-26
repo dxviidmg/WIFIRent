@@ -23,8 +23,8 @@ class NegocioUserCreateForm(forms.ModelForm):
 	        return username
 	    raise forms.ValidationError(u'El usuario "%s" ya esta en uso.' % username)
 
-class NegocioPerfilCreateForm(forms.ModelForm):
+class PuntoDeVentaCreateForm(forms.ModelForm):
 	class Meta:
-		model = Perfil
+		model = PuntoDeVenta
 		fields = ('telefono', 'domicilio', 'codigo_postal', 'municipio', 'estado')
 		
