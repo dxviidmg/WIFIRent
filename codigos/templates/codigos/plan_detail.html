@@ -1,0 +1,36 @@
+{% extends 'base.html'%}
+
+{%block content%}
+
+{{object}}
+
+	<div class="table-responsive text-center">
+		<table class="table">
+			<thead>
+				<th>Codigo</th>
+				<th>Creación</th>
+				<th>Acciones</th>
+			</thead>
+			<tbody>
+
+	{%for codigo in codigos%}
+
+				<tr>
+					<td>**{{codigo.codigo|slice:"2:"}}</td>
+					<td>{{codigo.creacion}} MXN</td>
+					<td>Vender</td>
+				</tr>
+	
+	{%empty%}
+	
+				<tr>
+					<td colspan="4">No hay codigoes</td>
+				</tr>
+
+	{%endfor%}
+
+			</tbody>
+		</table>
+	</div>
+
+{%endblock content%}

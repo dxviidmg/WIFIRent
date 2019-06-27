@@ -4,40 +4,30 @@
 
 	<h1>Lista de Planes</h1>
 
-	{%if request.user.is_staff%}
-
 	<div class="espacio">
 		<a href="{%url 'codigos:CreateViewPlan'%}">Crear plan</a>
 	</div>
-	
-	{%endif%}
 
 	<div class="table-responsive text-center">
 		<table class="table">
 			<thead>
-				<th>Nombre</th>
-				<th>Duración</th>
+				<th>Descripción</th>
 				<th>Precio</th>
 				<th>Códigos disponibles</th>
-				<th {%if request.user.is_staff%} colspan="3" {%endif%}>Acciones</th>
+				<th colspan="2">Acciones</th>
 			</thead>
 			<tbody>
 
 	{%for plan in planes%}
 
+		{{plan.CodigosDisponibles}}
+
 				<tr>
-					<td>{{plan.nombre}}</td>
-					<td>{{plan.duracion}} {%if plan.unidad_duracion == 1%} hora(s) {%elif plan.unidad_duracion == 2%} dia(s) {%elif plan.unidad_duracion == 3%} semanas(s) {%elif plan.unidad_duracion == 4%} mese(s) {%elif plan.unidad_duracion == 5%} año(s) {%endif%}</td>
+					<td>{{plan.duracion}} {{plan.unidad_duracion}}</td>
 					<td>${{plan.precio}} MXN</td>
-					<td>{%if plan.CodigosDisponibles.codigos_disponibles is None%} {{plan.codigos_disponibles}} {%endif%}</td>
-					<td><a href="{%url 'codigos:ListViewCodigos' plan.slug%}">Ver códigos</a></td>
-
-					{%if request.user.is_staff%}
-
+					<td> {{plan.codigos_disponibles}}</td>
+					<td>{%if plan.codigos_disponibles > 0%} <a href="{%url 'ventas:ViewVenta' plan.slug%}">Vender</a>{%else%}Necesitas comprar códigos{%endif%}</td>
 					<td><a href="{%url 'codigos:UpdateViewPlan' plan.slug%}">Actualizar</a></td>
-					<td><a href="{%url 'codigos:DeleteViewPlan' plan.slug%}">Borrar</a></td>
-
-					{%endif%}
 				</tr>
 	
 	{%empty%}

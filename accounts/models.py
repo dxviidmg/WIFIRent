@@ -18,6 +18,7 @@ class PuntoDeVenta(models.Model):
 	municipio = models.CharField(max_length=50)
 	estado = models.CharField(max_length=30, choices=Estado_choices, default="Hidalgo")
 	telefono = models.CharField(max_length=20)
+	nombre_red = models.CharField(max_length=30, default="test")
 
 	def __str__(self):
 		return '{} de {}'.format(self.nombre, self.user)

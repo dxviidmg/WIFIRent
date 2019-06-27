@@ -10,12 +10,14 @@
     
     <div class="alert alert-{{ message.tags }} text-center">{{ message }}</div>
 	
-	{% endfor %}    
-	
+	{%empty%}
+
 	<form action="." method="post">
 		{%csrf_token%}
 		{{VentaForm|bootstrap}}
 		<input type="submit" value="Vender">
 	</form>
+		
+	{% endfor %}
 
 {%endblock content%}

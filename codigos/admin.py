@@ -10,6 +10,6 @@ class PlanAdmin(admin.ModelAdmin):
 admin.site.register(Plan, PlanAdmin)
 
 class CodigoAdmin(admin.ModelAdmin):
-	list_display = ['codigo', 'plan', 'status']
-
+	list_display = ['codigo', 'plan', 'creacion','status']
+	list_filter = ['plan']
 admin.site.register(Codigo, CodigoAdmin)

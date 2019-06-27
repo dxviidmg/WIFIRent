@@ -5,17 +5,17 @@ from django.template.defaultfilters import slugify
 from accounts.models import *
 
 unidad_duracion_choices = (
-	("H", "Hora"),
-	("D", "Dia"),
-	("S", "Semana"),
-	("M", "Mes"),
-	("A", "Año"),
+	("Hora(s)", "Hora(s)"),
+	("Dia(s)", "Dia(s)"),
+	("Semana(s)", "Semana(s)"),
+	("Mes(s)", "Mes(s)"),
+	("Año(s)", "Año(s)"),
 )
 
 class Plan(models.Model):
 	punto_venta = models.ForeignKey(PuntoDeVenta)	
 	duracion = models.IntegerField(verbose_name='Duración')
-	unidad_duracion = models.CharField(max_length=1, choices=unidad_duracion_choices, verbose_name='Unidad de tiempo')
+	unidad_duracion = models.CharField(max_length=10, choices=unidad_duracion_choices, verbose_name='Unidad de tiempo')
 	precio = models.DecimalField(max_digits=6,decimal_places=2)
 	codigos_disponibles = models.IntegerField(default=0)
 	slug = models.SlugField(max_length=40, blank=True, unique=True)
@@ -24,19 +24,20 @@ class Plan(models.Model):
 		ordering = ['punto_venta', 'unidad_duracion', 'duracion']
 
 	def __str__(self):
-		return '{} {} {}'.format(self.punto_venta ,self.duracion, self.unidad_duracion)
-
-	def save(self):
-		self.slug= '-'.join((slugify(self.punto_venta.user.username), slugify(self.duracion), slugify(self.unidad_duracion)))
-		super(Plan, self).save()
+		return '{} {} {}'.format(self.duracion, self.unidad_duracion, self.punto_venta)
 
 	class Meta:
 		verbose_name_plural = 'Planes'		
 
-	def CodigosDisponibles(self):
+	def get_contar_codigos_disponibles(self):
 		plan = Plan.objects.get(pk=self.pk)
 		self.codigos_disponibles = Codigo.objects.filter(plan=plan, status="Disponible").count()
 		self.save()
+#		super(Plan, self).save()
+	
+	def save(self):
+		self.slug= '-'.join((slugify(self.punto_venta.user.username), slugify(self.duracion), slugify(self.unidad_duracion)))
+		super(Plan, self).save()
 
 class Codigo(models.Model):
 	status_choices = (
@@ -54,5 +55,6 @@ class Codigo(models.Model):
 	def __str__(self):
 		return '{}'.format(self.codigo)
 
-#	def get_absolute_url(self):
-#		return reverse('ventas:ViewVentaInicial', kwargs={'codigo': self.codigo})
+	def save(self):
+		self.plan.get_contar_codigos_disponibles()
+		super(Codigo, self).save()

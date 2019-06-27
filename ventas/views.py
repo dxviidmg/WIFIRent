@@ -3,51 +3,70 @@ from django.views.generic import View
 from .forms import *
 from twilio.rest import Client
 from django.contrib import messages
+from codigos.models import *
+from .sms import *
 
-class ViewVentaInicial(View):
+class ViewVenta(View):
 #	@method_decorator(login_required)
-	def get(self, request, codigo):
+	def get(self, request, slug):
+		plan = Plan.objects.get(slug=slug)
+#		print(plan)
+
+		try:
+			codigo = Codigo.objects.filter(plan=plan, status="Disponible")[:1].get()
+		except Codigo.DoesNotExist:
+			codigo = None
+
+#		codigo = Codigo.objects.filter(plan=plan, status="Disponible")[:1].get()
+#		print(codigo)
 		template_name = "ventas/ViewVentaInicial.html"		
 
 		VentaForm = VentaCreateForm()
 
 		context = {
+			'codigo': codigo,
 			'VentaForm': VentaForm,
 		}
 		return render(request,template_name, context)
-	def post(self, request, codigo):
+	def post(self, request, slug):
 		template_name = "ventas/ViewVentaInicial.html"
 		NuevaVentaForm = VentaCreateForm(request.POST)
-		codigo = Codigo.objects.get(codigo=codigo)
-		vendedor = User.objects.get(pk=request.user.pk)
-
+		plan = Plan.objects.get(slug=slug)
+#		print(plan)
+		codigo = Codigo.objects.filter(plan=plan, status="Disponible")[:1].get()
+#		print(codigo)
 		if NuevaVentaForm.is_valid(): 
 			NuevaVenta = NuevaVentaForm.save(commit=False)
 			NuevaVenta.codigo = codigo
-			NuevaVenta.vendedor = vendedor
 			NuevaVenta.save()
 
-			codigo.status = 1
+			codigo.status = "Vendido"
 			codigo.save()
 
-			#TWILIO
-			account_sid = ""
-			auth_token = ""
-			my_cell = "+52" + NuevaVenta.telefono
-			my_twilio = ""
+			telefono = "52" + NuevaVenta.telefono
 
-			client = Client(account_sid, auth_token)
-			my_message = NuevaVenta.codigo
-			message = client.messages.create(to=my_cell, from_=my_twilio, body=my_message)
+			r1 = "Código de activación: " + codigo.codigo
+			r2 = "\nDuración: " + str(plan.duracion) + " " + plan.unidad_duracion
+			r3 = "\nRed: " + plan.punto_venta.nombre_red
+			r4 = "\n" + plan.punto_venta.nombre + " agradece su preferencia."
+			mensaje = r1 + r2 + r3 + r4
+#			print(mensaje)
+#			print(telefono, plan.punto_venta)
+			status_sms = altiriaSms(telefono ,mensaje, True)
+			if status_sms == "OK":
+				messages.success(request, "Exito al enviar el código " + codigo.codigo + " enviado al " + telefono)
+			else:
+				messages.danger(request, "ERROR al enviar el código " + codigo.codigo + " enviado al " + telefono)
 
-			messages.success(request, "¡¡¡Mensaje enviado!!!")
-		return redirect("ventas:ViewVentaInicial", codigo)
+		plan.get_contar_codigos_disponibles()
+
+		return redirect("ventas:ViewVenta", plan.slug)
 
 class ListViewVentas(View):
 	def get(self, request):
 		template_name = "ventas/ListViewVentas.html"		
 
-		ventas = Venta.objects.all().order_by('-fecha')[:30]
+		ventas = Venta.objects.all().order_by('-fecha_hora')[:30]
 
 		context = {
 			'ventas': ventas
