@@ -1,8 +1,7 @@
 import requests
-from django.conf import settings
+from .sms_login import *
 
 def altiriaSms(destinations, message, debug):
-	login_altiria = settings.LOGIN_ALTIRIA 
 
 	if debug:
 		print('Enter altiriaSms: '+destinations+', message: '+message)
@@ -12,9 +11,9 @@ def altiriaSms(destinations, message, debug):
 			#XX, YY y ZZ se corresponden con los valores de identificación del usuario en el sistema.
 			payload = [
 			('cmd', 'sendsms'),
-			('domainId', login_altiria['domain_id']),
-			('login', login_altiria['login']),
-			('passwd', login_altiria['password']),
+			('domainId', domain_id),
+			('login', login),
+			('passwd', password),
 			#No es posible utilizar el remitente en América pero sí en España y Europa
 #			('senderId', senderId),
 			('msg', message)
