@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+#from codigos.models import Plan
 
 def get_full_name(self):
 	return '{} {}'.format(self.first_name, self.last_name)
@@ -19,9 +20,19 @@ class PuntoDeVenta(models.Model):
 	estado = models.CharField(max_length=30, choices=Estado_choices, default="Hidalgo")
 	telefono = models.CharField(max_length=20)
 	nombre_red = models.CharField(max_length=30, default="test")
+	codigos_disponibles = models.IntegerField(default=0)
 
 	def __str__(self):
 		return '{} de {}'.format(self.nombre, self.user)
 
 	class Meta:
-		verbose_name_plural = 'Puntos de venta'	
+		verbose_name_plural = 'Puntos de venta'
+
+	def contar_codigos_disponibles(self):
+		punto_venta = PuntoDeVenta.objects.get(pk=self.pk)
+#		print(punto_venta)
+#		planes = Plan.objects.get(punto_venta=punto_venta)
+#		print(planes)
+#		self.codigos_disponibles = Codigo.objects.filter(plan=plan, status="Disponible").count()
+#		self.save()
+#		super(Plan, self).save()

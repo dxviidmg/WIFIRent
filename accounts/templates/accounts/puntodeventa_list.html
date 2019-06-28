@@ -1,0 +1,38 @@
+{% extends 'base.html'%}
+
+{%block content%}
+
+	<div class="table-responsive text-center">
+		<table class="table">
+			<thead>
+				<th>Nombre</th>
+				<th>Dueño</th>
+				<th>Domicilio</th>
+				<th>Codigos disponibles</th>
+				<th>Acciones</th>
+			</thead>
+			<tbody>
+
+	{%for punto_venta in object_list%}
+
+				<tr>
+					<td>{{punto_venta.nombre}}</td>
+					<td>{{punto_venta.user.get_full_name}}</td>
+					<td>{{punto_venta.domicilio}}, {{punto_venta.municipio}}, {{punto_venta.estado}}</td>
+					<td>Prox</td>
+					<td><a href="{%url 'accounts:DetailViewPuntoVenta' punto_venta.pk%}">Ver</a></td>
+				</tr>
+	
+	{%empty%}
+	
+				<tr>
+					<td colspan="4">No hay punto_ventaes</td>
+				</tr>
+
+	{%endfor%}
+
+			</tbody>
+		</table>
+	</div>
+
+{%endblock content%}

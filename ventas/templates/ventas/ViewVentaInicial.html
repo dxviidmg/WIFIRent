@@ -16,6 +16,8 @@
 		{%csrf_token%}
 		{{VentaForm|bootstrap}}
 		<input type="submit" value="Vender">
+
+		<a href="{%url 'accounts:DetailViewPuntoVenta' request.user.puntodeventa.pk%}"><input class="" type="button" value="Cancelar"></a>
 	</form>
 		
 	{% endfor %}

@@ -7,13 +7,25 @@ from .forms import *
 from django.views.generic.edit import DeleteView
 from django.core.urlresolvers import reverse_lazy
 import datetime
+from django.views.generic.detail import DetailView
+from codigos.models import Plan
+from django.views.generic.list import ListView
 
-class ViewProfile(View):
+class ViewDireccionador(View):
 	@method_decorator(login_required)
 	def get(self, request):
-		template_name = "accounts/profile.html"		
-		return render(request,template_name)
+		try:	
+			request.user.puntodeventa
+			return redirect('accounts:DetailViewPuntoVenta', request.user.puntodeventa.pk)
+		except:
+			return redirect('accounts:ListViewPuntosVenta')
+#		return render(request,template_name)
 
+class ListViewPuntosDeVenta(ListView):
+    model = PuntoDeVenta
+#    paginate_by = 100
+
+"""
 class ListViewNegocios(View):
 	def get(self, request):
 		template_name = "accounts/ListViewNegocios.html"
@@ -68,3 +80,14 @@ class ListViewNegocios(View):
 			'negocios': negocios
 		}
 		return render(request,template_name,context)
+"""
+
+class DetailViewPuntoVenta(DetailView):
+	model = PuntoDeVenta
+
+	def get_context_data(self, **kwargs):
+		context = super(DetailViewPuntoVenta, self).get_context_data(**kwargs)
+		context['planes'] = Plan.objects.filter(punto_venta=self.object)
+#		print(context['codigos'])
+#		print(self.object)
+		return context

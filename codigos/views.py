@@ -10,18 +10,6 @@ from .forms import *
 #from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
-class ListViewPlanes(View):
-	@method_decorator(login_required)
-	def get(self, request):
-		template_name = "codigos/ListViewPlanes.html"
-		user = User.objects.get(username=request.user.username)
-		punto_venta = PuntoDeVenta.objects.get(user=user)
-		planes = Plan.objects.filter(punto_venta=punto_venta)
-		context = {
-			'planes': planes
-		}
-		return render(request,template_name, context)
-
 class ListViewCodigosxxx(View):
 	@method_decorator(login_required)
 	def get(self, request, slug):
@@ -51,23 +39,32 @@ class ListViewCodigosxxx(View):
 #Creación de un plan
 class CreateViewPlan(CreateView):
 	model = Plan
-	success_url = reverse_lazy('codigos:ListViewPlanes')
 	fields = ['duracion', 'unidad_duracion', 'precio']
+
+	def get_success_url(self):
+   		return reverse('accounts:DetailViewPuntoVenta',args=(self.object.id,))
 
 	def form_valid(self, form):
 		form.instance.punto_venta = self.request.user.puntodeventa
 		return super().form_valid(form)
 
+
 #Modificación de un plan
 class UpdateViewPlan(UpdateView):
 	model = Plan
-	success_url = reverse_lazy('codigos:ListViewPlanes')
+#	success_url = reverse_lazy('accounts:DetailViewPuntoVenta')
 	fields = ['duracion', 'unidad_duracion', 'precio']
+
+	def get_success_url(self):
+   		return reverse('accounts:DetailViewPuntoVenta',args=(self.object.id,))
 
 #Borrado de un plan
 class DeleteViewPlan(DeleteView):
 	model = Plan
-	success_url = reverse_lazy('codigos:ListViewPlanes')
+#	success_url = reverse_lazy('accounts:DetailViewPuntoVenta')
+
+	def get_success_url(self):
+   		return reverse('accounts:DetailViewPuntoVenta',args=(self.object.id,))
 
 class DetailViewPlan(DetailView):
 	model = Plan

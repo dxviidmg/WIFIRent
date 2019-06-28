@@ -30,9 +30,11 @@
 
 		{%if request.user.is_authenticated%}
 			<ul class="navbar-nav">
+			{%if request.user.puntodeventa%}
 				<li class="nav-item">
-					<a class="nav-link" href="{%url 'codigos:ListViewPlanes'%}">Planes</a>
+					<a class="nav-link" href="{%url 'accounts:DetailViewPuntoVenta' request.user.puntodeventa.pk%}">Planes</a>
 				</li>
+			{%endif%}
 				<li class="nav-item">
 					<a class="nav-link" href="{%url 'ventas:ListViewVentas'%}">Historial</a>
 				</li>
