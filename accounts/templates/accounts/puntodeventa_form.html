@@ -1,0 +1,15 @@
+{% extends 'base.html'%}
+
+{%block content%}
+
+	<form method="post" enctype="multipart/form-data">
+		{%csrf_token%}
+		{{ form }}
+
+		{% for formset in inlines %}
+    	{{ formset }}
+  		{% endfor %}
+		<input type="submit" value="{%if object%}Guardar cambios{%else%}Crear{%endif%}">
+	</form>
+
+{%endblock content%}

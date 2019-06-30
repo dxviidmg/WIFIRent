@@ -56,9 +56,9 @@ class ViewVenta(View):
 			if status_sms == "OK":
 				messages.success(request, "Exito al enviar el código " + codigo.codigo + " enviado al " + telefono)
 			else:
-				messages.danger(request, "ERROR al enviar el código " + codigo.codigo + " enviado al " + telefono)
+				messages.warning(request, "ERROR al enviar el código " + codigo.codigo + " enviado al " + telefono)
 
-		plan.get_contar_codigos_disponibles()
+#		plan.get_contar_codigos_disponibles()
 
 		return redirect("ventas:ViewVenta", plan.slug)
 

@@ -28,7 +28,16 @@ class Plan(models.Model):
 
 	class Meta:
 		verbose_name_plural = 'Planes'		
-	
+
+	def contar_codigos_disponibles(self):
+		plan = Plan.objects.get(pk=self.pk)
+#		print(plan)
+#		codigos = Codigo.objects.filter(plan=plan, status="Disponible").count()
+#		print(codigos)
+		self.codigos_disponibles = Codigo.objects.filter(plan=plan, status="Disponible").count()
+		self.save()
+		super(Plan, self).save()
+
 	def save(self):
 		self.slug= '-'.join((slugify(self.punto_venta.user.username), slugify(self.duracion), slugify(self.unidad_duracion)))
 		super(Plan, self).save()
@@ -49,6 +58,6 @@ class Codigo(models.Model):
 	def __str__(self):
 		return '{}'.format(self.codigo)
 
-#	def save(self):
-#		self.plan.get_contar_codigos_disponibles()
-#		super(Codigo, self).save()
+	def save(self):
+		self.plan.contar_codigos_disponibles()
+		super(Codigo, self).save()

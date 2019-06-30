@@ -2,14 +2,16 @@
 
 {%block content%}
 
+	<h2>Puntos de venta</h2>
+	<a href="{%url 'accounts:CreateViewPuntoDeVenta'%}">Crear</a>
 	<div class="table-responsive text-center">
 		<table class="table">
 			<thead>
 				<th>Nombre</th>
 				<th>Dueño</th>
+				<th>Username</th>
 				<th>Domicilio</th>
-				<th>Codigos disponibles</th>
-				<th>Acciones</th>
+				<th colspan="3">Acciones</th>
 			</thead>
 			<tbody>
 
@@ -18,9 +20,11 @@
 				<tr>
 					<td>{{punto_venta.nombre}}</td>
 					<td>{{punto_venta.user.get_full_name}}</td>
-					<td>{{punto_venta.domicilio}}, {{punto_venta.municipio}}, {{punto_venta.estado}}</td>
-					<td>Prox</td>
-					<td><a href="{%url 'accounts:DetailViewPuntoVenta' punto_venta.pk%}">Ver</a></td>
+					<td>{{punto_venta.user.username}}</td>
+					<td>{{punto_venta.get_domicilio_completo}}</td>
+					<td><a href="{%url 'accounts:DetailViewPuntoDeVenta' punto_venta.pk%}">Ver</a></td>
+					<td><a href="{%url 'accounts:UpdateViewPuntoDeVenta' punto_venta.user.pk%}">Actualizar</a></td>
+					<td><a href="{%url 'accounts:DeleteViewPuntoDeVenta' punto_venta.user.pk%}">Eliminar</a></td>
 				</tr>
 	
 	{%empty%}

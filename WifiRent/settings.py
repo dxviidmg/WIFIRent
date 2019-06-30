@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'accounts',
     'codigos',
     'ventas',
+    #Modules
     'bootstrapform',
+    'extra_views',
 ]
 
 MIDDLEWARE = [

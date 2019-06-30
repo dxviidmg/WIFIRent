@@ -21,7 +21,7 @@
 		{{form|bootstrap}}
 		<input type="submit" value="{%if object%}Guardar cambios{%else%}Crear{%endif%}">
 
-		<a href="{%url 'accounts:DetailViewPuntoVenta' request.user.puntodeventa.pk%}"><input class="" type="button" value="Cancelar"></a>
+		<a href="{%url 'accounts:DetailViewPuntoDeVenta' request.user.puntodeventa.pk%}"><input class="" type="button" value="Cancelar"></a>
 	</form>
 
 {%endblock content%}

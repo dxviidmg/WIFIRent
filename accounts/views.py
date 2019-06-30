@@ -1,92 +1,76 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
-from .forms import *
-from django.views.generic.edit import DeleteView
 from django.core.urlresolvers import reverse_lazy
-import datetime
-from django.views.generic.detail import DetailView
-from codigos.models import Plan
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import DeleteView
+from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetFactory
+from datetime import datetime
+from codigos.models import Plan
+from random import randint, choice
+import string 
+from .models import *
+
+now = datetime.now()
+#print(now.year)
 
 class ViewDireccionador(View):
 	@method_decorator(login_required)
 	def get(self, request):
 		try:	
-			request.user.puntodeventa
-			return redirect('accounts:DetailViewPuntoVenta', request.user.puntodeventa.pk)
+			print(request.user.puntodeventa)
+			return redirect('accounts:DetailViewPuntoDeVenta', request.user.puntodeventa.pk)
 		except:
-			return redirect('accounts:ListViewPuntosVenta')
-#		return render(request,template_name)
+			return redirect('accounts:ListViewPuntosDeVenta')
 
 class ListViewPuntosDeVenta(ListView):
-    model = PuntoDeVenta
+	model = PuntoDeVenta
 #    paginate_by = 100
 
-"""
-class ListViewNegocios(View):
-	def get(self, request):
-		template_name = "accounts/ListViewNegocios.html"
-		Negocios = User.objects.exclude(pk=request.Negocio.pk)
-		context = {
-			'Negocios': Negocios,
-		}
-		return render(request,template_name, context)
+class PuntoDeVentaInline(InlineFormSetFactory):
+	model = PuntoDeVenta
+	fields = ['nombre', 'domicilio', 'codigo_postal', 'municipio', 'estado', 'telefono', 'nombre_red']
 
-#Creación de un usuario
-class CreateViewNegocio(View):
-	@method_decorator(login_required)
-	def get(self, request):
-		template_name = "accounts/createNegocio.html"
-		
-		NuevoUserNegocioForm = NegocioUserCreateForm()
-		NuevoPerfilNegocioForm = NegocioPerfilCreateForm()
-		context = {
-			'NuevoUserNegocioForm': NuevoUserNegocioForm,
-			'NuevoPerfilNegocioForm': NuevoPerfilNegocioForm,			
-		}
-		return render(request,template_name,context)
-	def post(self,request):
-		NuevoUserNegocioForm = NegocioUserCreateForm(request.POST)
-		NuevoPerfilNegocioForm = NegocioPerfilCreateForm(request.POST)
-		dia = datetime.datetime.today().strftime('%d')
-		userLast = User.objects.last()
-
-		if NuevoUserNegocioForm.is_valid():
-			NuevoUserNegocio = NuevoUserNegocioForm.save(commit=False)
-			NuevoUserNegocio.username = "N" + str(dia) + str(userLast.pk+1)
-			NuevoUserNegocio.set_password(NuevoUserNegocioForm.cleaned_data['password'])
-			NuevoUserNegocio.save()
-
-#		if NuevoPerfilNegocioForm.is_valid():
-			NuevoPerfilNegocio = NuevoPerfilNegocioForm.save(commit=False)
-			NuevoPerfilNegocio.user = NuevoUserNegocio
-			NuevoPerfilNegocio.save()
-
-		return redirect('accounts:ListViewNegocios')
-
-#Eliminar usuario
-class DeleteViewNegocio(DeleteView):
+class CreateViewPuntoDeVenta(CreateWithInlinesView):
 	model = User
-	success_url = reverse_lazy('accounts:ListViewNegocios')
+	inlines = [PuntoDeVentaInline]
+	fields = ['first_name', 'last_name', 'email']
+	template_name = 'accounts/puntodeventa_form.html'
+	success_url = reverse_lazy('accounts:ListViewPuntosDeVenta')
 
-class ListViewNegocios(View):
-	def get(self, request):
-		template_name = "accounts/listViewNegocios.html"
-		negocios = User.objects.filter(username__startswith="N")
-		context = {
-			'negocios': negocios
-		}
-		return render(request,template_name,context)
-"""
+	def forms_valid(self, form, inlines):
+		last_account = User.objects.last()
+		object_pk = last_account.pk + 1
+		object_pk = str(object_pk)
+		random_number = randint(1,999)
+		random_number = str(random_number)
+		randon_letter_1 = choice(string.ascii_letters)
+		randon_letter_2 = choice(string.ascii_letters)
+		form.instance.username = "PV" + randon_letter_1 + randon_letter_2 + object_pk + random_number
+		password = "wifirent"
+#		print(password)
+		form.instance.set_password(password)
+		return super(CreateViewPuntoDeVenta, self).forms_valid(form, inlines)
 
-class DetailViewPuntoVenta(DetailView):
+class UpdateViewPuntoDeVenta(UpdateWithInlinesView):
+	model = User
+	inlines = [PuntoDeVentaInline]
+	fields = ['first_name', 'last_name', 'email']
+	template_name = 'accounts/puntodeventa_form.html'
+	success_url = reverse_lazy('accounts:ListViewPuntosDeVenta')
+
+class DeleteViewPuntosVenta(DeleteView):
+	model = User
+	success_url = reverse_lazy('accounts:ListViewPuntosDeVenta')
+
+class DetailViewPuntoDeVenta(DetailView):
 	model = PuntoDeVenta
 
 	def get_context_data(self, **kwargs):
-		context = super(DetailViewPuntoVenta, self).get_context_data(**kwargs)
+		context = super(DetailViewPuntoDeVenta, self).get_context_data(**kwargs)
 		context['planes'] = Plan.objects.filter(punto_venta=self.object)
 #		print(context['codigos'])
 #		print(self.object)

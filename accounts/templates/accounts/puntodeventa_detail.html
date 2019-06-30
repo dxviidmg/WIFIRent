@@ -2,11 +2,23 @@
 
 {%block content%}
 
-	<h1>Lista de Planes</h1>
 
-	<div class="espacio">
+	<h2>Información del punto de venta</h2>
+	<p>Nombre: {{object.nombre}}</p>
+	<p>Usuario: {{object.user.username}}</p>
+	<p>Dueño: {{object.user}}</p>
+	<p>Domicilio: {{object.get_domicilio_completo}}</p>
+	<p>E-mail: {{object.user.email}}</p>
+	<p>Telefono: {{object.telefono}}</p>
+	<p>Red: {{object.nombre_red}}</p>
+
+	<h2>Lista de planes</h2>
+
+	{%if request.user.puntodeventa%}
+
 		<a href="{%url 'codigos:CreateViewPlan'%}">Crear plan</a>
-	</div>
+
+	{%endif%}
 
 	<div class="table-responsive text-center">
 		<table class="table">
@@ -26,8 +38,15 @@
 					<td>{{plan.duracion}} {{plan.unidad_duracion}}</td>
 					<td>${{plan.precio}} MXN</td>
 					<td> {{plan.codigos_disponibles}}</td>
+
+					{%if request.user.puntodeventa%}
+
 					<td>{%if plan.codigos_disponibles > 0%} <a href="{%url 'ventas:ViewVenta' plan.slug%}">Vender</a>{%else%}Necesitas comprar códigos{%endif%}</td>
 					<td><a href="{%url 'codigos:UpdateViewPlan' plan.slug%}">Actualizar</a></td>
+					{%else%}
+
+					<td><a href="">Agregar códigos</a></td>
+					{%endif%}
 				</tr>
 	
 	{%empty%}
