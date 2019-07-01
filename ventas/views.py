@@ -19,17 +19,18 @@ class ViewVenta(View):
 
 #		codigo = Codigo.objects.filter(plan=plan, status="Disponible")[:1].get()
 #		print(codigo)
-		template_name = "ventas/ViewVentaInicial.html"		
+		template_name = "ventas/venta.html"		
 
 		VentaForm = VentaCreateForm()
 
 		context = {
+			'plan': plan,
 			'codigo': codigo,
 			'VentaForm': VentaForm,
 		}
 		return render(request,template_name, context)
 	def post(self, request, slug):
-		template_name = "ventas/ViewVentaInicial.html"
+		template_name = "ventas/venta.html"
 		NuevaVentaForm = VentaCreateForm(request.POST)
 		plan = Plan.objects.get(slug=slug)
 #		print(plan)
@@ -58,15 +59,18 @@ class ViewVenta(View):
 			else:
 				messages.warning(request, "ERROR al enviar el código " + codigo.codigo + " enviado al " + telefono)
 
-#		plan.get_contar_codigos_disponibles()
+		plan.contar_codigos_disponibles()
 
 		return redirect("ventas:ViewVenta", plan.slug)
 
 class ListViewVentas(View):
 	def get(self, request):
-		template_name = "ventas/ListViewVentas.html"		
-
-		ventas = Venta.objects.all().order_by('-fecha_hora')[:30]
+		template_name = "ventas/venta_list.html"
+		user = User.objects.filter(pk=request.user.pk)
+		punto_venta = PuntoDeVenta.objects.filter(user=user)
+		planes = Plan.objects.filter(punto_venta=punto_venta)
+		codigos = Codigo.objects.filter(plan__in=planes, status="Vendido")
+		ventas = Venta.objects.filter(codigo__in=codigos).order_by('-fecha_hora')
 
 		context = {
 			'ventas': ventas

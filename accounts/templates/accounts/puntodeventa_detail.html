@@ -2,6 +2,11 @@
 
 {%block content%}
 
+	{%if not request.user.puntodeventa%}
+
+		<a href="{%url 'accounts:ListViewPuntosDeVenta'%}">Regresar</a>
+
+	{%endif%}
 
 	<h2>Información del punto de venta</h2>
 	<p>Nombre: {{object.nombre}}</p>

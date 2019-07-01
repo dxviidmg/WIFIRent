@@ -4,18 +4,19 @@
 
 {%block content%}
 
-	<h4>Registro de nueva venta</h4>
+	<p>Venta de un codigo del plan de {{plan.duracion}} {{plan.unidad_duracion}} con un precio de ${{plan.precio}}</p>
 
 	{% for message in messages %}
     
     <div class="alert alert-{{ message.tags }} text-center">{{ message }}</div>
 	
+	<a href="{%url 'accounts:DetailViewPuntoDeVenta' request.user.puntodeventa.pk%}"><input class="" type="button" value="Regresar"></a>
 	{%empty%}
 
 	<form action="." method="post">
 		{%csrf_token%}
 		{{VentaForm|bootstrap}}
-		<input type="submit" value="Vender">
+		<input type="submit" value="Realizar venta">
 
 		<a href="{%url 'accounts:DetailViewPuntoDeVenta' request.user.puntodeventa.pk%}"><input class="" type="button" value="Cancelar"></a>
 	</form>
