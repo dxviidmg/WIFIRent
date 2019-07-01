@@ -2,15 +2,12 @@
 
 {%block content%}
 
-	<div class="row justify-content-center text-center">
-		<div class="col-xs-12">
-			<form method="post">
-				<p>¿Estas seguro de querer borrar al punto de venta {{object.puntodeventa}}?</p>
-				{%csrf_token%}
-				<input type="submit" value="Si">
-				<a href="{%url 'accounts:ListViewPuntosDeVenta'%}"><input type="button" value="Cancelar"></a>
-			</form>
-		</div>
-	</div>
+	<a href="{%url 'accounts:ListViewPuntosDeVenta'%}">Regresar</a>
+
+	<form method="post">
+		<p>¿Estas seguro de querer borrar al punto de venta {{object.puntodeventa}}?</p>
+		{%csrf_token%}
+		<input type="submit" value="Si, borrar">
+	</form>
 
 {%endblock content%}

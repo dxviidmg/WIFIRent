@@ -17,6 +17,13 @@ class ViewVenta(View):
 		except Codigo.DoesNotExist:
 			codigo = None
 
+		unidad_duracion = "hora"
+		if plan.unidad_duracion == "d":
+			unidad_duracion = "dia"
+		if plan.duracion > 1:
+			unidad_duracion = unidad_duracion + "s"
+		print(unidad_duracion)
+
 #		codigo = Codigo.objects.filter(plan=plan, status="Disponible")[:1].get()
 #		print(codigo)
 		template_name = "ventas/venta.html"		
@@ -27,6 +34,7 @@ class ViewVenta(View):
 			'plan': plan,
 			'codigo': codigo,
 			'VentaForm': VentaForm,
+			'unidad_duracion': unidad_duracion
 		}
 		return render(request,template_name, context)
 	def post(self, request, slug):
@@ -45,9 +53,16 @@ class ViewVenta(View):
 			codigo.save()
 
 			telefono = "52" + NuevaVenta.telefono
+			
+			unidad_duracion = "hora"
+			if plan.unidad_duracion == "d":
+				unidad_duracion = "dia"
+			if plan.duracion > 1:
+				unidad_duracion = unidad_duracion + "s"
+#			print(unidad_duracion)
 
 			r1 = "Código de activación: " + codigo.codigo
-			r2 = "\nDuración: " + str(plan.duracion) + " " + plan.unidad_duracion
+			r2 = "\nDuración: " + str(plan.duracion) + " " + unidad_duracion
 			r3 = "\nRed: " + plan.punto_venta.nombre_red
 			r4 = "\n" + plan.punto_venta.nombre + " agradece su preferencia."
 			mensaje = r1 + r2 + r3 + r4
@@ -57,9 +72,9 @@ class ViewVenta(View):
 			if status_sms == "OK":
 				messages.success(request, "Exito al enviar el código " + codigo.codigo + " enviado al " + telefono)
 			else:
-				messages.warning(request, "ERROR al enviar el código " + codigo.codigo + " enviado al " + telefono)
+				messages.warning(request, "ERROR al enviar el código " + codigo.codigo + " enviado al " + telefono + "... " + status_sms)
 
-		plan.contar_codigos_disponibles()
+			plan.contar_codigos_disponibles()
 
 		return redirect("ventas:ViewVenta", plan.slug)
 

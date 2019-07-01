@@ -31,7 +31,9 @@
 				<th>Descripción</th>
 				<th>Precio</th>
 				<th>Códigos disponibles</th>
+				{%if request.user.puntodeventa%}
 				<th colspan="2">Acciones</th>
+				{%endif%}
 			</thead>
 			<tbody>
 
@@ -40,7 +42,7 @@
 		{{plan.CodigosDisponibles}}
 
 				<tr>
-					<td>{{plan.duracion}} {{plan.unidad_duracion}}</td>
+					<td>{{plan.duracion}} {%if plan.unidad_duracion == "h"%}hora{%else%}dia{%endif%}{%if plan.duracion > 1%}s{%endif%}</td>
 					<td>${{plan.precio}} MXN</td>
 					<td> {{plan.codigos_disponibles}}</td>
 
@@ -48,9 +50,6 @@
 
 					<td>{%if plan.codigos_disponibles > 0%} <a href="{%url 'ventas:ViewVenta' plan.slug%}">Vender</a>{%else%}Necesitas comprar códigos{%endif%}</td>
 					<td><a href="{%url 'codigos:UpdateViewPlan' plan.slug%}">Actualizar</a></td>
-					{%else%}
-
-					<td><a href="">Agregar códigos</a></td>
 					{%endif%}
 				</tr>
 	

@@ -4,18 +4,12 @@ from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 from accounts.models import *
 
-unidad_duracion_choices = (
-	("Hora(s)", "Hora(s)"),
-	("Dia(s)", "Dia(s)"),
-	("Semana(s)", "Semana(s)"),
-	("Mes(s)", "Mes(s)"),
-	("Año(s)", "Año(s)"),
-)
+unidad_duracion_choices = (("h", "Hora(s)"), ("d", "Dia(s)"))
 
 class Plan(models.Model):
 	punto_venta = models.ForeignKey(PuntoDeVenta)	
 	duracion = models.IntegerField(verbose_name='Duración')
-	unidad_duracion = models.CharField(max_length=10, choices=unidad_duracion_choices, verbose_name='Unidad de tiempo')
+	unidad_duracion = models.CharField(max_length=1, choices=unidad_duracion_choices, verbose_name='Unidad de tiempo')
 	precio = models.DecimalField(max_digits=6,decimal_places=2)
 	codigos_disponibles = models.IntegerField(default=0)
 	slug = models.SlugField(max_length=40, blank=True, unique=True)
@@ -31,11 +25,7 @@ class Plan(models.Model):
 
 	def contar_codigos_disponibles(self):
 		plan = Plan.objects.get(pk=self.pk)
-#		print(plan)
-#		codigos = Codigo.objects.filter(plan=plan, status="Disponible").count()
-#		print(codigos)
 		self.codigos_disponibles = Codigo.objects.filter(plan=plan, status="Disponible").count()
-		self.save()
 		super(Plan, self).save()
 
 	def save(self):

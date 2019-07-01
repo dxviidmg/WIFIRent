@@ -13,7 +13,7 @@ class PuntoDeVenta(models.Model):
 		("Querétaro", "Querétaro"),
 	)
 	user = models.OneToOneField(User)
-	nombre = models.CharField(max_length=50)
+	nombre = models.CharField(max_length=50, verbose_name='Nombre del punto de venta')
 	domicilio = models.TextField()
 	codigo_postal = models.IntegerField()
 	municipio = models.CharField(max_length=50)
@@ -30,7 +30,7 @@ class PuntoDeVenta(models.Model):
 		verbose_name_plural = 'Puntos de venta'
 
 	def get_domicilio_completo(self):
-		return '{} {} {} {} {}'.format(self.domicilio, self.municipio, self.codigo_postal, self.municipio, self.estado)
+		return '{} {} {} {}'.format(self.domicilio, self.codigo_postal, self.municipio, self.estado)
 
 
 #	def save(self):

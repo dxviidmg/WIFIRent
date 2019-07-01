@@ -1,14 +1,21 @@
 {% extends 'base.html'%}
 
+{% load bootstrap %}
+
 {%block content%}
 
+	<a href="{%url 'accounts:ListViewPuntosDeVenta'%}">Regresar</a>
+
+	<h2>{%if object%}Modificacion de datos de punto de venta{%else%}Creacion de punto de venta{%endif%}</h2>
+	
 	<form method="post" enctype="multipart/form-data">
 		{%csrf_token%}
-		{{ form }}
-
-		{% for formset in inlines %}
-    	{{ formset }}
-  		{% endfor %}
+		<p>Dueño</p>
+		{{form|bootstrap}}
+		<p>Punto de venta</p>
+		{%for formset in inlines%}
+    	{{ formset |bootstrap }}
+    	{%endfor%}
 		<input type="submit" value="{%if object%}Guardar cambios{%else%}Crear{%endif%}">
 	</form>
 
