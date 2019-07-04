@@ -10,10 +10,11 @@ class CreateViewPlan(CreateView):
 
 	def get_success_url(self):
 #		print(self.request.user.puntodeventa, self.object.id,)
-   		return reverse('accounts:DetailViewPuntoDeVenta',args=(self.request.user.puntodeventa.pk,))
+   		return reverse('accounts:DetailViewPuntoDeVenta',args=(self.object.punto_venta.pk,))
 
 	def form_valid(self, form):
-		form.instance.punto_venta = self.request.user.puntodeventa
+		punto_venta = PuntoDeVenta.objects.get(pk=self.kwargs['pk'])
+		form.instance.punto_venta = punto_venta
 		return super().form_valid(form)
 
 #Modificación de un plan
@@ -23,7 +24,7 @@ class UpdateViewPlan(UpdateView):
 	fields = ['duracion', 'unidad_duracion', 'precio']
 
 	def get_success_url(self):
-   		return reverse('accounts:DetailViewPuntoDeVenta',args=(self.request.user.puntodeventa.pk,))
+   		return reverse('accounts:DetailViewPuntoDeVenta',args=(self.object.punto_venta.pk,))
 
 class DetailViewPlan(DetailView):
 	model = Plan
@@ -31,6 +32,31 @@ class DetailViewPlan(DetailView):
 	def get_context_data(self, **kwargs):
 		context = super(DetailViewPlan, self).get_context_data(**kwargs)
 		context['codigos'] = Codigo.objects.filter(plan=self.object, status="Disponible")
+
+		context['duracion'] = "hora"
+		if self.object.unidad_duracion == "d":
+			context['duracion'] = "dia"
+		if self.object.duracion > 1:
+			context['duracion'] = context['duracion'] + "s"
 #		print(context['codigos'])
 #		print(self.object)
+		return context
+
+class CreateViewCodigo(CreateView):
+	model = Codigo
+	fields = ['codigo', 'creacion']
+
+	def get_success_url(self):
+		plan = Plan.objects.get(slug=self.kwargs['slug'])
+		return reverse('codigos:DetailViewPlan',args=(plan.slug,))
+
+	def form_valid(self, form):
+		plan = Plan.objects.get(slug=self.kwargs['slug'])
+		form.instance.plan = plan
+		return super().form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super(CreateViewCodigo, self).get_context_data(**kwargs)
+		plan = Plan.objects.get(slug=self.kwargs['slug'])
+		context['plan'] = plan
 		return context

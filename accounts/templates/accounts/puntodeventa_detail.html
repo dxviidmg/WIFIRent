@@ -21,8 +21,7 @@
 
 	{%if request.user.puntodeventa%}
 
-		<a href="{%url 'codigos:CreateViewPlan'%}">Crear plan</a>
-
+		<a href="{%url 'codigos:CreateViewPlan' object.pk%}">Crear plan</a>
 	{%endif%}
 
 	<div class="table-responsive text-center">
@@ -31,18 +30,14 @@
 				<th>Descripción</th>
 				<th>Precio</th>
 				<th>Códigos disponibles</th>
-				{%if request.user.puntodeventa%}
-				<th colspan="2">Acciones</th>
-				{%endif%}
+				
+				<th {%if request.user.puntodeventa%} colspan="2" {%endif%}>Acciones</th>
 			</thead>
 			<tbody>
 
 	{%for plan in planes%}
-
-		{{plan.CodigosDisponibles}}
-
 				<tr>
-					<td>{{plan.duracion}} {%if plan.unidad_duracion == "h"%}hora{%else%}dia{%endif%}{%if plan.duracion > 1%}s{%endif%}</td>
+					<td>{%if plan.contar_codigos_disponibles%}{{plan.contar_codigos_disponibles}}{%endif%}{{plan.duracion}} {%if plan.unidad_duracion == "h"%}hora{%else%}dia{%endif%}{%if plan.duracion > 1%}s{%endif%}</td>
 					<td>${{plan.precio}} MXN</td>
 					<td> {{plan.codigos_disponibles}}</td>
 
@@ -50,6 +45,8 @@
 
 					<td>{%if plan.codigos_disponibles > 0%} <a href="{%url 'ventas:ViewVenta' plan.slug%}">Vender</a>{%else%}Necesitas comprar códigos{%endif%}</td>
 					<td><a href="{%url 'codigos:UpdateViewPlan' plan.slug%}">Actualizar</a></td>
+					{%else%}
+					<td><a href="{%url 'codigos:DetailViewPlan' plan.slug%}">Ver y agregar codigos</a></td>
 					{%endif%}
 				</tr>
 	

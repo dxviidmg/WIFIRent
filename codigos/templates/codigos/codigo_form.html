@@ -1,0 +1,18 @@
+{% extends 'base.html'%}
+
+{% load bootstrap %}
+
+{%block content%}
+
+	<a href="{%url 'codigos:DetailViewPlan' plan.slug%}">Regresar</a>
+
+	<h2>{%if object%}Modificacion de datos de punto de venta{%else%}Creacion de un codigo{%endif%}</h2>
+	
+	<form method="post" enctype="multipart/form-data">
+		{%csrf_token%}
+		{{form|bootstrap}}
+
+		<input type="submit" value="{%if object%}Guardar cambios{%else%}Crear{%endif%}">
+	</form>
+
+{%endblock content%}

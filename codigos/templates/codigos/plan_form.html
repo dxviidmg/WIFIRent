@@ -6,15 +6,11 @@
 
 	{%if object%}
 
-	<h4>Edita el plan <strong><i>{{object.nombre}}<i></strong></h4>
-	
+	<h2>Edita el plan <strong><i>{{object.nombre}}<i></strong></h2>
 	{%else%}
-	
-	<h4>Crea un plan</h4>
+	<h2>Crea un plan</h2>
 	
 	{%endif%}
-
-	<h1>{{request.user.puntodeventa}}</h1>
 
 	<form method="post" enctype="multipart/form-data">
 		{%csrf_token%}
