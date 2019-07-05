@@ -1,11 +1,11 @@
-from __future__ import unicode_literals
+#from __future__ import unicode_literals
 import requests
 from .sms_login import *
 
 def altiriaSms(destinations, message, debug):
 
 	if debug:
-		print('Enter altiriaSms: '+destinations+', message: '+message)
+#		print('Enter altiriaSms: '+destinations+', message: '+message)
 
 		try:
 			#Se crea la lista de parámetros a enviar en la petición POST

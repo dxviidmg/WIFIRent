@@ -130,4 +130,6 @@ from django.core.urlresolvers import reverse_lazy
 LOGIN_REDIRECT_URL = reverse_lazy('accounts:ViewDireccionador')
 LOGOUT_REDIRECT_URL = reverse_lazy('accounts:login')
  
+#En servidor invertir comentarios
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
+#STATIC_ROOT = os.path.join(BASE_DIR, "static/")
