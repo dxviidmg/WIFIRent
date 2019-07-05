@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import requests
 from .sms_login import *
 
