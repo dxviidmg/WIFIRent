@@ -65,7 +65,7 @@ class ViewVenta(View):
 			r3 = "\nRed: " + plan.punto_venta.nombre_red
 			r4 = "\n" + plan.punto_venta.nombre + " agradece su preferencia."
 			mensaje = r1 + r2 + r3 + r4
-#			print(mensaje)
+			print(mensaje)
 #			print(telefono, plan.punto_venta)
 			status_sms = altiriaSms(telefono ,mensaje, True)
 			if status_sms == "OK":
