@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from .forms import *
@@ -21,7 +22,7 @@ class ViewVenta(View):
 			unidad_duracion = "dia"
 		if plan.duracion > 1:
 			unidad_duracion = unidad_duracion + "s"
-		print(unidad_duracion)
+#		print(unidad_duracion)
 
 #		codigo = Codigo.objects.filter(plan=plan, status="Disponible")[:1].get()
 #		print(codigo)
@@ -64,7 +65,9 @@ class ViewVenta(View):
 			r2 = "\nTiempo: " + str(plan.duracion) + " " + unidad_duracion
 			r3 = "\nRed: " + plan.punto_venta.nombre_red
 			r4 = "\n" + plan.punto_venta.nombre + " agradece su preferencia."
-			mensaje = r1 + r2 + r3 + r4
+
+			renglones = [r1, r2, r3, r4]
+			mensaje = " ".join(renglones)
 			print(mensaje)
 #			print(telefono, plan.punto_venta)
 			status_sms = altiriaSms(telefono ,mensaje, True)

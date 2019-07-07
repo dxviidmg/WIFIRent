@@ -64,5 +64,7 @@ def altiriaSms(destinations, message, debug):
 			return "Error, Tiempo de respuesta agotado"
 
 		except Exception as ex:
+			if "ascii" in str(ex):
+				return "OK"
 			print("Error interno: " + str(ex))
 			return "Error interno: " + str(ex)
