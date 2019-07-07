@@ -60,8 +60,8 @@ class ViewVenta(View):
 				unidad_duracion = unidad_duracion + "s"
 #			print(unidad_duracion)
 
-			r1 = "Código de activación: " + codigo.codigo
-			r2 = "\nDuración: " + str(plan.duracion) + " " + unidad_duracion
+			r1 = "Voucher: " + codigo.codigo
+			r2 = "\nTiempo: " + str(plan.duracion) + " " + unidad_duracion
 			r3 = "\nRed: " + plan.punto_venta.nombre_red
 			r4 = "\n" + plan.punto_venta.nombre + " agradece su preferencia."
 			mensaje = r1 + r2 + r3 + r4
