@@ -65,6 +65,6 @@ def altiriaSms(destinations, message, debug):
 
 		except Exception as ex:
 			if "ascii" in str(ex):
-				return "OK"
+				return "OK", str(ex)
 			print("Error interno: " + str(ex))
 			return "Error interno: " + str(ex)

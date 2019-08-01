@@ -6,7 +6,6 @@
 	
 	<h2>Lista de codigos del plan {{object.duracion}} {{duracion}} de punto de venta {{object.punto_venta.nombre}}</h2>
 
-	<a href="{%url 'codigos:CreateViewCodigo' object.slug%}">Crear codigo</a>
 	<div class="table-responsive text-center">
 		<table class="table">
 			<thead>
@@ -19,13 +18,13 @@
 
 				<tr>
 					<td>{{codigo.codigo}}</td>
-					<td>{{codigo.creacion}} MXN</td>
+					<td>{{codigo.creacion}}</td>
 				</tr>
 	
 	{%empty%}
 	
 				<tr>
-					<td colspan="4">No hay codigos</td>
+					<td colspan="2">No hay codigos</td>
 				</tr>
 
 	{%endfor%}

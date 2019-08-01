@@ -12,4 +12,12 @@ admin.site.register(Plan, PlanAdmin)
 class CodigoAdmin(admin.ModelAdmin):
 	list_display = ['codigo', 'plan', 'creacion','status']
 	list_filter = ['plan']
+
 admin.site.register(Codigo, CodigoAdmin)
+
+class RecargaAdmin(admin.ModelAdmin):
+	date_hierarchy = 'creacion'
+	list_display = ['precio', 'cantidad', 'creacion', 'plan', 'autor']
+	list_filter = ['plan']
+
+admin.site.register(Recarga, RecargaAdmin)

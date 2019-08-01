@@ -16,6 +16,7 @@
 	<p>E-mail: {{object.user.email}}</p>
 	<p>Telefono: {{object.telefono}}</p>
 	<p>Red: {{object.nombre_red}}</p>
+	<p>Saldo acumulado: ${{object.saldo_acumulado}}</p>	
 
 	<h2>Lista de planes</h2>
 
@@ -31,7 +32,7 @@
 				<th>Precio</th>
 				<th>Códigos disponibles</th>
 				
-				<th {%if request.user.puntodeventa%} colspan="2" {%endif%}>Acciones</th>
+				<th {%if request.user.puntodeventa%} colspan="3"{%else%} colspan="2" {%endif%}>Acciones</th>
 			</thead>
 			<tbody>
 
@@ -46,8 +47,9 @@
 					<td>{%if plan.codigos_disponibles > 0%} <a href="{%url 'ventas:ViewVenta' plan.slug%}">Vender</a>{%else%}Necesitas comprar códigos{%endif%}</td>
 					<td><a href="{%url 'codigos:UpdateViewPlan' plan.slug%}">Actualizar</a></td>
 					{%else%}
-					<td><a href="{%url 'codigos:DetailViewPlan' plan.slug%}">Ver y agregar codigos</a></td>
+					<td><a href="{%url 'codigos:CreateViewRecarga' plan.slug%}">Hacer recarga</a></td>
 					{%endif%}
+					<td><a href="">Ver recargas</a></td>	
 				</tr>
 	
 	{%empty%}

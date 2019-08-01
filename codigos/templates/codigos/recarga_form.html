@@ -4,9 +4,9 @@
 
 {%block content%}
 
-	<a href="{%url 'codigos:DetailViewPlan' plan.slug%}">Regresar</a>
+	<a href="{%url 'accounts:DetailViewPuntoDeVenta' plan.pk%}">Regresar</a>
 
-	<h2>{%if object%}Modificacion de datos de punto de venta{%else%}Creacion de un codigo{%endif%}</h2>
+	<h2>Crea de una recarga para el plan {{plan}}</h2>
 	
 	<form method="post" enctype="multipart/form-data">
 		{%csrf_token%}
