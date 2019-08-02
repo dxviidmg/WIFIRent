@@ -11,7 +11,7 @@ admin.site.register(Plan, PlanAdmin)
 
 class CodigoAdmin(admin.ModelAdmin):
 	list_display = ['codigo', 'plan', 'creacion','status']
-	list_filter = ['plan']
+	list_filter = ['plan__punto_venta', 'plan', 'status']
 
 admin.site.register(Codigo, CodigoAdmin)
 

@@ -50,7 +50,7 @@
 					{%else%}
 					<td><a href="{%url 'codigos:CreateViewRecarga' plan.slug%}">Hacer recarga</a></td>
 					{%endif%}
-					<td><a href="">Ver recargas</a></td>	
+					<td><a href="{%url 'codigos:DetailViewPlan' plan.slug%}">Historial de recargas</a></td>	
 				</tr>
 	
 	{%empty%}

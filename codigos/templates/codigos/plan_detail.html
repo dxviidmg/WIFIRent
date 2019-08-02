@@ -4,21 +4,23 @@
 
 	<a href="{%url 'accounts:DetailViewPuntoDeVenta' object.punto_venta.pk%}">Regresar</a>
 	
-	<h2>Lista de codigos del plan {{object.duracion}} {{duracion}} de punto de venta {{object.punto_venta.nombre}}</h2>
+	<h2>Historial de recargas del plan {{object.duracion}} {{duracion}} de punto de venta {{object.punto_venta.nombre}}</h2>
 
 	<div class="table-responsive text-center">
 		<table class="table">
 			<thead>
-				<th>Codigo</th>
+				<th>Precio</th>
+				<th>Cantidad</th>
 				<th>Creación</th>
 			</thead>
 			<tbody>
 
-	{%for codigo in codigos%}
+	{%for recarga in recargas%}
 
 				<tr>
-					<td>{{codigo.codigo}}</td>
-					<td>{{codigo.creacion}}</td>
+					<td>${{recarga.precio}} MXN</td>
+					<td>{{recarga.cantidad}}</td>
+					<td>{{recarga.creacion}}</td>
 				</tr>
 	
 	{%empty%}

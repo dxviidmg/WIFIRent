@@ -62,6 +62,9 @@ class Recarga(models.Model):
 	creacion = models.DateTimeField(default=timezone.now)
 	autor = models.ForeignKey(User)
 
+	def __str__(self):
+		return '{} {} {}'.format(self.precio, self.cantidad, self.creacion)	
+
 #	print(self.plan.precio)
 
 	def save(self):
