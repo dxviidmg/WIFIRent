@@ -65,7 +65,9 @@ class Recarga(models.Model):
 #	print(self.plan.precio)
 
 	def save(self):
-		saldo_total = self.precio* Decimal(1.1) + self.plan.punto_venta.saldo_acumulado
+		porcentaje = self.plan.punto_venta.porcentaje_comision/100 + 1
+#		print(porcentaje)
+		saldo_total = self.precio* Decimal(porcentaje) + self.plan.punto_venta.saldo_acumulado
 		cantidad = saldo_total//self.plan.precio
 		saldo_actual = saldo_total - cantidad*self.plan.precio
 		self.cantidad = cantidad
@@ -88,7 +90,7 @@ class Recarga(models.Model):
 			randon_letter_3 = choice(string.ascii_letters)
 			randon_letter_4 = choice(string.ascii_letters)
 			codigo = str(base+n) + random_number + "-" + randon_letter_1 + randon_letter_2 + randon_letter_3 + randon_letter_4
-			print(codigo)
+#			print(codigo)
 
 
 			codigos.append(Codigo(codigo=codigo, plan=self.plan))
