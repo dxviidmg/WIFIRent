@@ -87,7 +87,7 @@ def codigos_recien_creados_csv(request, pk):
 		limit_update = str(plan.duracion) + ":00:00"
 		if len(limit_update) == 7:
 			limit_update = "0" + limit_update
-	print(limit_update)
+#	print(limit_update)
 
 	if plan.duracion > 1:
 		unidad_duracion = unidad_duracion + "s"
@@ -101,9 +101,9 @@ def codigos_recien_creados_csv(request, pk):
 	writer = csv.writer(response)
 #	writer.writerow(['Codigo', 'Zona', 'Plan',])
 
-	codigos = Codigo.objects.filter(plan=plan, status="Disponible").order_by('-id')[:recarga.cantidad].values_list('codigo', 'plan__duracion', 'plan__unidad_duracion')
+	codigos = Codigo.objects.filter(plan=plan, status="Disponible").order_by('-id')[:recarga.cantidad].values_list('codigo')
 	for codigo in codigos:
-#		writer.writerow(['add limit-update=' + limit_update + ' name=' + codigo[0] + ' password=' + codigo[0] + ' profile="' + str(codigo[1]) + codigo[2] + '"'])
-		writer.writerow(['add limit-update=' + limit_update + ' name=' + codigo[0] + ' password=' + codigo[0] + ' profile="default"'])
+		writer.writerow(['add limit-update=' + limit_update + ' name=' + codigo[0] + ' password=' + codigo[0] + ' profile="' + str(plan.duracion) + plan.unidad_duracion + '"'])
+#		writer.writerow(['add limit-update=' + limit_update + ' name=' + codigo[0] + ' password=' + codigo[0] + ' profile="default"'])
 
 	return response	
