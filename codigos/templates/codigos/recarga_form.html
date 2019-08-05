@@ -15,7 +15,8 @@
 			
 			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m}}</li>
 
-		<a href="{%url 'codigos:codigos_recien_creados_csv' ultima_recarga%}">Descarga csv</a>
+			<a href="{%url 'codigos:codigos_recien_creados_csv' ultima_recarga%}">Descarga los códigos creados aqui</a>
+			
 		{% endfor %}
 		</div>
 	{% endif %}

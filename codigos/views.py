@@ -50,7 +50,7 @@ class CreateViewRecarga(SuccessMessageMixin, CreateView):
 
 	ultima_recarga = Recarga.objects.latest('pk')
 	base = ultima_recarga.pk + 1
-	success_message = str(base) + " " +str(ultima_recarga.precio)
+	success_message = "¡Creacion de códigos exitosa!"
 #	print(success_message)
 
 	def get_success_url(self):
@@ -80,8 +80,14 @@ def codigos_recien_creados_csv(request, pk):
 	plan = Plan.objects.get(recarga=recarga)
 
 	unidad_duracion = "dia"
+	limit_update = str(plan.duracion) + plan.unidad_duracion
+	
 	if plan.unidad_duracion == "h":
 		unidad_duracion = "hora"
+		limit_update = str(plan.duracion) + ":00:00"
+		if len(limit_update) == 7:
+			limit_update = "0" + limit_update
+	print(limit_update)
 
 	if plan.duracion > 1:
 		unidad_duracion = unidad_duracion + "s"
@@ -97,6 +103,7 @@ def codigos_recien_creados_csv(request, pk):
 
 	codigos = Codigo.objects.filter(plan=plan, status="Disponible").order_by('-id')[:recarga.cantidad].values_list('codigo', 'plan__duracion', 'plan__unidad_duracion')
 	for codigo in codigos:
-		writer.writerow(['add limit-update=' + str(codigo[1]) + codigo[2] + ' name=' + codigo[0] + ' password=' + codigo[0] + ' profile="' + str(codigo[1]) + codigo[2] + '"'])
+#		writer.writerow(['add limit-update=' + limit_update + ' name=' + codigo[0] + ' password=' + codigo[0] + ' profile="' + str(codigo[1]) + codigo[2] + '"'])
+		writer.writerow(['add limit-update=' + limit_update + ' name=' + codigo[0] + ' password=' + codigo[0] + ' profile="default"'])
 
 	return response	
