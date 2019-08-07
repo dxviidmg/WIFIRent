@@ -32,7 +32,7 @@ class ListViewPuntosDeVenta(ListView):
 
 class PuntoDeVentaInline(InlineFormSetFactory):
 	model = PuntoDeVenta
-	fields = ['nombre', 'domicilio', 'codigo_postal', 'municipio', 'estado', 'telefono', 'porcentaje_comision', 'nombre_red', ]
+	fields = ['nombre', 'domicilio', 'codigo_postal', 'municipio', 'estado', 'telefono', 'porcentaje_comision', 'nombre_red', 'tecnologia_wifi']
 
 class CreateViewPuntoDeVenta(CreateWithInlinesView):
 	model = User

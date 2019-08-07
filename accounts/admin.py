@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 #admin.site.register(PuntoDeVenta)
 
 class PuntoDeVentaAdmin(admin.ModelAdmin):
-	list_display = ['nombre', 'user', 'municipio', 'estado']
+	list_display = ['nombre', 'user', 'municipio', 'estado', 'tecnologia_wifi']
 
 admin.site.register(PuntoDeVenta, PuntoDeVentaAdmin)
 
