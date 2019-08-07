@@ -40,7 +40,7 @@ class Codigo(models.Model):
 		("Disponible", "Disponible"),
 		("Vendido", "Vendido")
 	)
-	codigo = models.CharField(max_length=20)
+	codigo = models.CharField(max_length=11)
 	plan = models.ForeignKey(Plan, null=True)
 	creacion = models.DateTimeField(default=timezone.now)
 	status = models.CharField(max_length=10, choices=status_choices, default="Disponible")

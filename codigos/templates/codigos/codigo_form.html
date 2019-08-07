@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+
+{% load bootstrap %}
+
+{%block content%}
+
+	<a href="{%url 'accounts:DetailViewPuntoDeVenta' plan.punto_venta.pk%}">Regresar</a>
+
+	<h2>Crea un código para el plan {{plan.duracion}} {{unidad_duracion}} de {{plan.punto_venta}}</h2>
+
+	{% if messages %}
+	
+		<div class="alert alert-success">
+		{% for m in messages %}
+			
+			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}> {{ m}} {{ultimo_codigo}}</li> 
+		{% endfor %}
+		</div>
+	{% endif %}
+
+	<form method="post" enctype="multipart/form-data">
+		{%csrf_token%}
+		{{form|bootstrap}}
+
+		<input type="submit" value="Crear">
+	</form>
+
+{%endblock content%}

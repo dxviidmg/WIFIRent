@@ -48,8 +48,8 @@ class CreateViewRecarga(SuccessMessageMixin, CreateView):
 	model = Recarga
 	fields = ['precio',]
 
-	ultima_recarga = Recarga.objects.latest('pk')
-	base = ultima_recarga.pk + 1
+#	ultima_recarga = Recarga.objects.latest('pk')
+#	base = ultima_recarga.pk + 1
 	success_message = "¡Recarga exitosa!"
 #	print(success_message)
 
@@ -76,8 +76,7 @@ class CreateViewRecarga(SuccessMessageMixin, CreateView):
 			unidad_duracion = unidad_duracion + "s"
 		context['unidad_duracion'] = unidad_duracion
 
-		ultima_recarga_al_momento = Recarga.objects.latest('pk')
-		ultima_recarga = ultima_recarga_al_momento
+		ultima_recarga = Recarga.objects.latest('pk')
 #		print(base)		
 		context['ultima_recarga'] = ultima_recarga
 		return context
@@ -114,4 +113,40 @@ def codigos_recien_creados_csv(request, pk):
 		writer.writerow(['add limit-update=' + limit_update + ' name=' + codigo[0] + ' password=' + codigo[0] + ' profile="' + str(plan.duracion) + plan.unidad_duracion + '"'])
 #		writer.writerow(['add limit-update=' + limit_update + ' name=' + codigo[0] + ' password=' + codigo[0] + ' profile="default"'])
 
-	return response	
+	return response
+
+class CreateViewCodigo(SuccessMessageMixin, CreateView):
+	model = Codigo
+	fields = ['codigo',]
+
+#	ultimo_codigo = Codigo.objects.latest('pk')
+#	base = ultima_c.pk + 1
+	success_message = "¡Código exitoso!"
+#	print(success_message)
+
+	def get_success_url(self):
+		plan = Plan.objects.get(slug=self.kwargs['slug'])
+		return reverse('codigos:CreateViewCodigo',args=(plan.slug,))
+
+	def form_valid(self, form):
+		plan = Plan.objects.get(slug=self.kwargs['slug'])
+		form.instance.plan = plan
+#		form.instance.autor = self.request.user
+		return super().form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super(CreateViewCodigo, self).get_context_data(**kwargs)
+		plan = Plan.objects.get(slug=self.kwargs['slug'])
+		context['plan'] = plan
+
+		unidad_duracion = "hora"
+		if plan.unidad_duracion == "d":
+			unidad_duracion = "dia"
+
+		if plan.duracion > 1:
+			unidad_duracion = unidad_duracion + "s"
+		context['unidad_duracion'] = unidad_duracion
+#
+		ultimo_codigo = Codigo.objects.latest('pk')
+		context['ultimo_codigo'] = ultimo_codigo
+		return context	
