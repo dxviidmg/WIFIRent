@@ -80,24 +80,27 @@ class Recarga(models.Model):
 		punto_venta.saldo_acumulado = saldo_actual
 		punto_venta.save()
 
-		ultimo_codigo = Codigo.objects.latest('pk')
+		if self.plan.punto_venta.tecnologia_wifi == "Mikrotik":
+			try:
+				ultimo_codigo = Codigo.objects.latest('pk')
+				base = ultimo_codigo.pk + 1	
+			except:
+				base = 1
 
-		base = ultimo_codigo.pk + 1
+			codigos = []		
 
-		codigos = []		
-
-		for n in range(int(cantidad)):
-			random_number = str(randint(0,9))
-			randon_letter_1 = choice(string.ascii_letters)
-			randon_letter_2 = choice(string.ascii_letters)
-			randon_letter_3 = choice(string.ascii_letters)
-			randon_letter_4 = choice(string.ascii_letters)
-			codigo = str(base+n) + random_number + "-" + randon_letter_1 + randon_letter_2 + randon_letter_3 + randon_letter_4
-#			print(codigo)
+			for n in range(int(cantidad)):
+				random_number = str(randint(0,9))
+				randon_letter_1 = choice(string.ascii_letters)
+				randon_letter_2 = choice(string.ascii_letters)
+				randon_letter_3 = choice(string.ascii_letters)
+				randon_letter_4 = choice(string.ascii_letters)
+				codigo = str(base+n) + random_number + "-" + randon_letter_1 + randon_letter_2 + randon_letter_3 + randon_letter_4
+	#			print(codigo)
 
 
-			codigos.append(Codigo(codigo=codigo, plan=self.plan))
-#		print(codigos)
-		Codigo.objects.bulk_create(codigos)
+				codigos.append(Codigo(codigo=codigo, plan=self.plan))
+	#		print(codigos)
+			Codigo.objects.bulk_create(codigos)
 		
 		super(Recarga, self).save()	

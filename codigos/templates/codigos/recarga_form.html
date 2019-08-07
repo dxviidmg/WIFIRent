@@ -4,9 +4,9 @@
 
 {%block content%}
 
-	<a href="{%url 'accounts:DetailViewPuntoDeVenta' plan.pk%}">Regresar</a>
+	<a href="{%url 'accounts:DetailViewPuntoDeVenta' plan.punto_venta.pk%}">Regresar</a>
 
-	<h2>Crea de una recarga para el plan {{plan}}</h2>
+	<h2>Crea de una recarga para el plan {{plan.duracion}} {{unidad_duracion}} de {{plan.punto_venta}}</h2>
 
 	{{plan.punto_venta.tecnologia_wifi}}
 
@@ -16,9 +16,13 @@
 		{% for m in messages %}
 			
 			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m}}</li>
-
-			<a href="{%url 'codigos:codigos_recien_creados_csv' ultima_recarga%}">Descarga los códigos creados aqui</a>
 			
+			{%if plan.punto_venta.tecnologia_wifi == "Mikrotik"%}
+			La tecnologia usada es mikrotik por lo que tiene descargar los codigos e ingresarlos en la terminal del dispositivo
+			<a href="{%url 'codigos:codigos_recien_creados_csv' ultima_recarga.pk%}">Descarga de códigos</a>
+			{%else%}
+			La tecnologia usada es Unifi por lo que tiene que crear {{ultima_recarga.cantidad}} de codigos en el dispositivo de red y registrarlos en este sistema.
+			{%endif%}
 		{% endfor %}
 		</div>
 	{% endif %}

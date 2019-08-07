@@ -50,7 +50,7 @@ class CreateViewRecarga(SuccessMessageMixin, CreateView):
 
 	ultima_recarga = Recarga.objects.latest('pk')
 	base = ultima_recarga.pk + 1
-	success_message = "¡Creacion de códigos exitosa!"
+	success_message = "¡Recarga exitosa!"
 #	print(success_message)
 
 	def get_success_url(self):
@@ -68,8 +68,16 @@ class CreateViewRecarga(SuccessMessageMixin, CreateView):
 		plan = Plan.objects.get(slug=self.kwargs['slug'])
 		context['plan'] = plan
 
+		unidad_duracion = "hora"
+		if plan.unidad_duracion == "d":
+			unidad_duracion = "dia"
+
+		if plan.duracion > 1:
+			unidad_duracion = unidad_duracion + "s"
+		context['unidad_duracion'] = unidad_duracion
+
 		ultima_recarga_al_momento = Recarga.objects.latest('pk')
-		ultima_recarga = ultima_recarga_al_momento.pk
+		ultima_recarga = ultima_recarga_al_momento
 #		print(base)		
 		context['ultima_recarga'] = ultima_recarga
 		return context
