@@ -69,10 +69,19 @@ class Recarga(models.Model):
 
 	def save(self):
 		porcentaje = self.plan.punto_venta.porcentaje_comision/100 + 1
-#		print(porcentaje)
+		print(porcentaje, type(porcentaje))
 		saldo_total = self.precio* Decimal(porcentaje) + self.plan.punto_venta.saldo_acumulado
+		print(saldo_total, type(saldo_total))
+		str_saldo_total = str(saldo_total)
+		indice_punto = str_saldo_total.index(".")
+		print(indice_punto, len(str_saldo_total))
+		if len(str_saldo_total) > indice_punto+3:
+			saldo_total = Decimal(str(Decimal(str_saldo_total[:indice_punto+3]) + Decimal(0.01))[:indice_punto+3])
+			print(saldo_total)
 		cantidad = saldo_total//self.plan.precio
+		print(cantidad, type(cantidad))
 		saldo_actual = saldo_total - cantidad*self.plan.precio
+		print(saldo_actual, type(saldo_actual))
 		self.cantidad = cantidad
 #		print(self.plan)
 
