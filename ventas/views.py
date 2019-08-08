@@ -5,6 +5,8 @@ from .forms import *
 from django.contrib import messages
 from codigos.models import *
 from .sms import *
+from django.views.generic.edit import CreateView
+from django.contrib.messages.views import SuccessMessageMixin
 
 class ViewVenta(View):
 #	@method_decorator(login_required)
@@ -93,3 +95,56 @@ class ListViewVentas(View):
 			'ventas': ventas
 		}
 		return render(request,template_name, context)
+
+class CreateViewVenta(SuccessMessageMixin, CreateView):
+	model = Venta
+	fields = ['telefono']
+	success_message = "¡Venta realizada!"
+
+	def get_success_url(self):
+		print(self.object.codigo.plan.slug)
+		return reverse('ventas:CreateViewVenta',args=(self.object.codigo.plan.slug,))
+
+	def form_valid(self, form):
+		plan = Plan.objects.get(slug=self.kwargs['slug'])
+		try:
+			codigo = Codigo.objects.filter(plan=plan, status="Disponible")[:1].get()
+			codigo.status = "Vendido"
+			codigo.save()
+	
+			form.instance.codigo = codigo
+
+			r1 = "Voucher: " + codigo.codigo
+			r2 = "\nTiempo: " + str(codigo.plan.duracion) + " " + codigo.plan.unidad_duracion
+			r3 = "\nRed: " + codigo.plan.punto_venta.nombre_red
+			r4 = "\n" + codigo.plan.punto_venta.nombre + " agradece su preferencia."
+			renglones = [r1, r2, r3, r4]
+#		renglones = [r1]
+
+			mensaje = " ".join(renglones)
+			print(mensaje)
+
+			form.instance.status_sms = altiriaSms(form.instance.telefono, mensaje, True)
+			plan.contar_codigos_disponibles()
+
+		except Codigo.DoesNotExist:
+			codigo = None
+
+		return super().form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super(CreateViewVenta, self).get_context_data(**kwargs)
+		plan = Plan.objects.get(slug=self.kwargs['slug'])
+		context['plan'] = plan
+
+		unidad_duracion = "hora"
+		if plan.unidad_duracion == "d":
+			unidad_duracion = "dia"
+
+		if plan.duracion > 1:
+			unidad_duracion = unidad_duracion + "s"
+		context['unidad_duracion'] = unidad_duracion
+		
+		context['ultima_venta'] = Venta.objects.latest('pk')
+
+		return context			

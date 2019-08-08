@@ -12,7 +12,6 @@ class CreateViewPlan(CreateView):
 	fields = ['duracion', 'unidad_duracion', 'precio']
 
 	def get_success_url(self):
-#		print(self.request.user.puntodeventa, self.object.id,)
 		return reverse('accounts:DetailViewPuntoDeVenta',args=(self.object.punto_venta.pk,))
 
 	def form_valid(self, form):
@@ -76,9 +75,7 @@ class CreateViewRecarga(SuccessMessageMixin, CreateView):
 			unidad_duracion = unidad_duracion + "s"
 		context['unidad_duracion'] = unidad_duracion
 
-		ultima_recarga = Recarga.objects.latest('pk')
-#		print(base)		
-		context['ultima_recarga'] = ultima_recarga
+		context['ultima_recarga'] = Recarga.objects.latest('pk')
 		return context
 
 def codigos_recien_creados_csv(request, pk):

@@ -45,7 +45,10 @@
 
 					{%if request.user.puntodeventa%}
 
-					<td>{%if plan.codigos_disponibles > 0%} <a href="{%url 'ventas:ViewVenta' plan.slug%}">Vender</a>{%else%}Necesitas comprar códigos{%endif%}</td>
+					<td>{%if plan.codigos_disponibles > 0%} <a href="{%url 'ventas:ViewVenta' plan.slug%}">Vender</a>
+
+					<a href="{%url 'ventas:CreateViewVenta' plan.slug%}">Vender2</a>
+					{%else%}Necesitas comprar códigos{%endif%}</td>
 					<td><a href="{%url 'codigos:UpdateViewPlan' plan.slug%}">Actualizar</a></td>
 					{%else%}
 					<td><a href="{%url 'codigos:CreateViewRecarga' plan.slug%}">Hacer recarga</a></td>
