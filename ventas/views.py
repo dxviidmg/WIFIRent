@@ -124,7 +124,7 @@ class CreateViewVenta(SuccessMessageMixin, CreateView):
 			mensaje = " ".join(renglones)
 			print(mensaje)
 
-			form.instance.status_sms = altiriaSms(form.instance.telefono, mensaje, True)
+			form.instance.status_sms = altiriaSms("52" + form.instance.telefono, mensaje, True)
 			plan.contar_codigos_disponibles()
 
 		except Codigo.DoesNotExist:
@@ -144,7 +144,5 @@ class CreateViewVenta(SuccessMessageMixin, CreateView):
 		if plan.duracion > 1:
 			unidad_duracion = unidad_duracion + "s"
 		context['unidad_duracion'] = unidad_duracion
-		
 		context['ultima_venta'] = Venta.objects.latest('pk')
-
-		return context			
+		return context
