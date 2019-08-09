@@ -3,7 +3,8 @@
 {% load bootstrap %}
 
 {%block content%}
-
+	
+	<a href="{%url 'accounts:DetailViewPuntoDeVenta' punto_venta.pk%}">Regresar</a>
 	{%if object%}
 
 	<h2>Edita el plan <strong><i>{{object.nombre}}<i></strong></h2>
@@ -16,8 +17,6 @@
 		{%csrf_token%}
 		{{form|bootstrap}}
 		<input type="submit" value="{%if object%}Guardar cambios{%else%}Crear{%endif%}">
-
-		<a href="{%url 'accounts:DetailViewPuntoDeVenta' request.user.puntodeventa.pk%}"><input class="" type="button" value="Cancelar"></a>
 	</form>
 
 {%endblock content%}

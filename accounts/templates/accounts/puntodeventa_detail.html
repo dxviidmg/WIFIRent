@@ -18,13 +18,15 @@
 	<p>Red: {{object.nombre_red}}</p>
 	<p>Saldo acumulado: ${{object.saldo_acumulado}}</p>	
 	<p>{{object.porcentaje_comision}}% de comisión</p>
+
+	{%if not request.user.puntodeventa%}
 	<p>Tecnología usada: {{object.tecnologia_wifi}}</p>
+	{%endif%}
+	
+
 	<h2>Lista de planes</h2>
 
-	{%if request.user.puntodeventa%}
-
-		<a href="{%url 'codigos:CreateViewPlan' object.pk%}">Crear plan</a>
-	{%endif%}
+	<a href="{%url 'codigos:CreateViewPlan' object.pk%}">Crear plan</a>
 
 	<div class="table-responsive text-center">
 		<table class="table">

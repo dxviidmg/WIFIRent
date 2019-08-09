@@ -19,6 +19,12 @@ class CreateViewPlan(CreateView):
 		form.instance.punto_venta = punto_venta
 		return super().form_valid(form)
 
+	def get_context_data(self, **kwargs):
+		context = super(CreateViewPlan, self).get_context_data(**kwargs)
+		punto_venta = PuntoDeVenta.objects.get(pk=self.kwargs['pk'])
+		context['punto_venta'] = punto_venta
+		return context
+		
 #Modificación de un plan
 class UpdateViewPlan(UpdateView):
 	model = Plan
