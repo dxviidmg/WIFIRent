@@ -75,7 +75,11 @@ class CreateViewRecarga(SuccessMessageMixin, CreateView):
 			unidad_duracion = unidad_duracion + "s"
 		context['unidad_duracion'] = unidad_duracion
 
-		context['ultima_recarga'] = Recarga.objects.latest('pk')
+		try:
+			context['ultima_recarga'] = Recarga.objects.latest('pk')
+		except:
+			context['ultima_recarga'] = None
+
 		return context
 
 def codigos_recien_creados_csv(request, pk):
