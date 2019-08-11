@@ -117,8 +117,7 @@ def codigos_recien_creados_csv(request, pk):
 
 	codigos = Codigo.objects.filter(plan=plan, status="Disponible").order_by('-id')[:recarga.cantidad].values_list('codigo')
 	for codigo in codigos:
-		writer.writerow(['add limit-update=' + limit_update + ' name=' + codigo[0] + ' password=' + codigo[0] + ' profile="' + str(plan.duracion) + plan.unidad_duracion + '"'])
-#		writer.writerow(['add limit-update=' + limit_update + ' name=' + codigo[0] + ' password=' + codigo[0] + ' profile="default"'])
+		writer.writerow(['/ip hotspot user add limit-uptime=' + limit_update + ' name=' + codigo[0] + ' password=' + codigo[0] + ' profile="' + str(plan.duracion) + plan.unidad_duracion + '" server=hotspot1'])
 
 	return response
 
