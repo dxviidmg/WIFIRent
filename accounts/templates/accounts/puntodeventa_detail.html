@@ -20,7 +20,14 @@
 	<p>{{object.porcentaje_comision}}% de comisión</p>
 
 	{%if not request.user.puntodeventa%}
-	<p>Tecnología usada: {{object.tecnologia_wifi}}</p>
+		{%if not antena%}
+
+	<div class="alert alert-danger" role="alert">
+			No existe la antena
+	</div>
+
+		{%endif%}
+	<p>Tecnología usada: {{object.user.antena}}</p>
 	{%endif%}
 	
 

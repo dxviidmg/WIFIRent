@@ -7,16 +7,18 @@ def get_full_name(self):
 
 User.add_to_class("__str__", get_full_name)
 
+tecnologia_wifi_choices = (
+	("Unifi", "Unifi"),
+	("Mikrotik", "Mikrotik"),
+)
+
 class PuntoDeVenta(models.Model):	
 	estado_choices = (
 		("Hidalgo", "Hidalgo"),
 		("Querétaro", "Querétaro"),
 	)
 
-	tecnologia_wifi_choices = (
-		("Unifi", "Unifi"),
-		("Mikrotik", "Mikrotik"),
-	)
+
 
 	user = models.OneToOneField(User)
 	nombre = models.CharField(max_length=50, verbose_name='Nombre del punto de venta')
@@ -25,11 +27,11 @@ class PuntoDeVenta(models.Model):
 	municipio = models.CharField(max_length=50)
 	estado = models.CharField(max_length=30, choices=estado_choices, default="Hidalgo")
 	telefono = models.CharField(max_length=20)
-	nombre_red = models.CharField(max_length=50, default="test")
+#	nombre_red = models.CharField(max_length=50, default="test")
 	codigos_disponibles = models.IntegerField(default=0)
 	saldo_acumulado = models.DecimalField(max_digits=6,decimal_places=2, default=0)	
 	porcentaje_comision = models.IntegerField(default=20)
-	tecnologia_wifi = models.CharField(max_length=10, default="Unifi", choices=tecnologia_wifi_choices)
+#	tecnologia_wifi = models.CharField(max_length=10, default="Unifi", choices=tecnologia_wifi_choices)
 
 	def __str__(self):
 		return '{} de {}'.format(self.nombre, self.user)
@@ -44,3 +46,15 @@ class PuntoDeVenta(models.Model):
 #	def save(self):
 #		self.slug= '-'.join((slugify(self.user.username), slugify(self.nombre)))
 #		super(PuntoDeVenta, self).save()
+
+class Antena(models.Model):	
+	user = models.OneToOneField(User)
+	tecnologia = models.CharField(max_length=10, choices=tecnologia_wifi_choices, verbose_name='Tecnología')
+	ssid = models.CharField(max_length=50, default="Mi red", verbose_name='SSID o nombre de la red')
+	usuario = models.CharField(max_length=20, default="admin")
+	password = models.CharField(max_length=20, default="admin")
+	ip = models.TextField(verbose_name='IP o DNS', blank=True, null=True)
+
+	def __str__(self):
+		return '{}'.format(self.user)
+

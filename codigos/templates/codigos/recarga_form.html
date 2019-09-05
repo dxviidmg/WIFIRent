@@ -15,7 +15,7 @@
 			
 			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ m}}</li>
 			
-			{%if plan.punto_venta.tecnologia_wifi == "Mikrotik"%}
+			{%if plan.punto_venta.user.antena.tecnologia == "Mikrotik"%}
 			La tecnologia usada es mikrotik por lo que tiene descargar los codigos e ingresarlos en la terminal del dispositivo
 			<a href="{%url 'codigos:codigos_recien_creados_csv' ultima_recarga.pk%}">Descarga de códigos</a>
 			{%else%}

@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 #admin.site.register(PuntoDeVenta)
 
 class PuntoDeVentaAdmin(admin.ModelAdmin):
-	list_display = ['nombre', 'user', 'municipio', 'estado', 'tecnologia_wifi']
+	list_display = ['nombre', 'user', 'municipio', 'estado']
 
 admin.site.register(PuntoDeVenta, PuntoDeVentaAdmin)
 
@@ -25,3 +25,7 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
+
+class AntenaAdmin(admin.ModelAdmin):
+	list_display = ['user', 'tecnologia']
+admin.site.register(Antena, AntenaAdmin)

@@ -89,7 +89,7 @@ class Recarga(models.Model):
 		punto_venta.saldo_acumulado = saldo_actual
 		punto_venta.save()
 
-		if self.plan.punto_venta.tecnologia_wifi == "Mikrotik":
+		if self.plan.punto_venta.user.antena.tecnologia == "Mikrotik":
 			try:
 				ultimo_codigo = Codigo.objects.latest('pk')
 				base = ultimo_codigo.pk + 1	

@@ -32,11 +32,15 @@ class ListViewPuntosDeVenta(ListView):
 
 class PuntoDeVentaInline(InlineFormSetFactory):
 	model = PuntoDeVenta
-	fields = ['nombre', 'domicilio', 'codigo_postal', 'municipio', 'estado', 'telefono', 'porcentaje_comision', 'nombre_red', 'tecnologia_wifi']
+	fields = ['nombre', 'domicilio', 'codigo_postal', 'municipio', 'estado', 'telefono', 'porcentaje_comision']
+
+class AntenaInline(InlineFormSetFactory):
+	model = Antena
+	fields = ['tecnologia', 'ssid', 'usuario', 'password', 'ip']	
 
 class CreateViewPuntoDeVenta(CreateWithInlinesView):
 	model = User
-	inlines = [PuntoDeVentaInline]
+	inlines = [PuntoDeVentaInline, AntenaInline]
 	fields = ['first_name', 'last_name', 'email']
 	template_name = 'accounts/puntodeventa_form.html'
 	success_url = reverse_lazy('accounts:ListViewPuntosDeVenta')
@@ -57,7 +61,7 @@ class CreateViewPuntoDeVenta(CreateWithInlinesView):
 
 class UpdateViewPuntoDeVenta(UpdateWithInlinesView):
 	model = User
-	inlines = [PuntoDeVentaInline]
+	inlines = [PuntoDeVentaInline, AntenaInline]
 	fields = ['first_name', 'last_name', 'email']
 	template_name = 'accounts/puntodeventa_form.html'
 	success_url = reverse_lazy('accounts:ListViewPuntosDeVenta')
@@ -71,7 +75,15 @@ class DetailViewPuntoDeVenta(DetailView):
 
 	def get_context_data(self, **kwargs):
 		context = super(DetailViewPuntoDeVenta, self).get_context_data(**kwargs)
+#		print(self.object.user.antena.pk)
 		context['planes'] = Plan.objects.filter(punto_venta=self.object)
-#		print(context['codigos'])
-#		print(self.object)
+		try:
+			context['antena'] = self.object.user.antena
+		except:
+			context['antena'] = None
+#		punto_venta = PuntoDeVenta.objects.get(pk=self.object)
+#		print(punto_venta)
+#		antena = Antena.objects.get(user=self.object)
+#		print("Antena", self.object.user.antena)
+
 		return context

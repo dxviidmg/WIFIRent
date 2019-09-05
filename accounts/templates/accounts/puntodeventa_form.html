@@ -10,10 +10,16 @@
 	
 	<form method="post" enctype="multipart/form-data">
 		{%csrf_token%}
-		<p>Dueño</p>
+		<h3>Dueño</h3>
 		{{form|bootstrap}}
-		<p>Punto de venta</p>
 		{%for formset in inlines%}
+		<h3>
+		{%if forloop.counter ==  1%}
+		Punto de Venta 
+		{%elif forloop.counter ==  2%}
+		Antena
+		{%endif%}
+		</h3>
     	{{ formset |bootstrap }}
     	{%endfor%}
 		<input type="submit" value="{%if object%}Guardar cambios{%else%}Crear{%endif%}">
