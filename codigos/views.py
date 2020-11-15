@@ -153,6 +153,9 @@ class CreateViewCodigo(SuccessMessageMixin, CreateView):
 			unidad_duracion = unidad_duracion + "s"
 		context['unidad_duracion'] = unidad_duracion
 #
-		ultimo_codigo = Codigo.objects.latest('pk')
-		context['ultimo_codigo'] = ultimo_codigo
+		try:
+			ultimo_codigo = Codigo.objects.latest('pk')
+			context['ultimo_codigo'] = ultimo_codigo
+		except:
+			ultimo_codigo = None
 		return context	
