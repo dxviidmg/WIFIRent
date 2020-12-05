@@ -7,6 +7,7 @@ from codigos.models import *
 from .sms import *
 from django.views.generic.edit import CreateView
 from django.contrib.messages.views import SuccessMessageMixin
+from .forms import *
 
 class ListViewVentas(View):
 	def get(self, request):
@@ -24,7 +25,8 @@ class ListViewVentas(View):
 
 class CreateViewVenta(SuccessMessageMixin, CreateView):
 	model = Venta
-	fields = ['telefono']
+#	fields = ['telefono']
+	form_class = VentaForm
 	success_message = "¡Venta realizada!"
 
 	def get_success_url(self):
@@ -60,7 +62,7 @@ class CreateViewVenta(SuccessMessageMixin, CreateView):
 			renglones = [r1, r2, r3, r4]
 
 			mensaje = " ".join(renglones)
-			print(mensaje)
+#			print(mensaje)
 
 			form.instance.status_sms = altiriaSms("52" + form.instance.telefono, mensaje, True)
 			plan.contar_codigos_disponibles()
