@@ -20,10 +20,9 @@ now = datetime.now()
 class ViewDireccionador(View):
 	@method_decorator(login_required)
 	def get(self, request):
-		try:	
-			print(request.user.puntodeventa)
+		if request.user.is_staff == False:
 			return redirect('accounts:DetailViewPuntoDeVenta', request.user.puntodeventa.pk)
-		except:
+		else:
 			return redirect('accounts:ListViewPuntosDeVenta')
 
 class ListViewPuntosDeVenta(ListView):

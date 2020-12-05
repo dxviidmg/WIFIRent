@@ -33,7 +33,8 @@ class CreateViewVenta(SuccessMessageMixin, CreateView):
 
 	def form_valid(self, form):
 		plan = Plan.objects.get(slug=self.kwargs['slug'])
-		tecnologia_wifi = plan.punto_venta.tecnologia_wifi
+		tecnologia_wifi = plan.punto_venta.user.antena.tecnologia
+
 		try:
 			codigo = Codigo.objects.filter(plan=plan, status="Disponible")[:1].get()
 			codigo.status = "Vendido"
@@ -54,7 +55,7 @@ class CreateViewVenta(SuccessMessageMixin, CreateView):
 
 			r1 = r1 + codigo.codigo
 			r2 = "\nTiempo: " + str(codigo.plan.duracion) + " " + unidad_duracion
-			r3 = "\nRed: " + codigo.plan.punto_venta.nombre_red
+			r3 = "\nRed: " + plan.punto_venta.user.antena.ssid
 			r4 = "\n" + codigo.plan.punto_venta.nombre + " agradece su preferencia."
 			renglones = [r1, r2, r3, r4]
 
@@ -63,10 +64,10 @@ class CreateViewVenta(SuccessMessageMixin, CreateView):
 
 			form.instance.status_sms = altiriaSms("52" + form.instance.telefono, mensaje, True)
 			plan.contar_codigos_disponibles()
-
+		
 		except Codigo.DoesNotExist:
 			codigo = None
-
+		
 		return super().form_valid(form)
 
 	def get_context_data(self, **kwargs):
