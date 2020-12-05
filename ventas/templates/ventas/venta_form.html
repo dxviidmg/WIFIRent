@@ -20,15 +20,18 @@
 			<li>Codigo: {{ultima_venta}}</li>
 			<li>Telefono {{ultima_venta.telefono}} </li>
 		{% endfor %}
+
 		</div>
-	{% endif %}
+
+		<p>Si desea hacer otra recarga con este plan, haga click <a onClick="window.location.href=window.location.href" ><b>Aqui</b></p></a></p>
+	{%else%}
 
 	<form method="post" enctype="multipart/form-data">
 		{%csrf_token%}
-		{{form|bootstrap}}
+		{{form|bootstrap}}		
+		<input type="submit" value="Realizar venta">
 
-		<input type="submit" value="Crear">
+	{%endif%}
 	</form>
-
 
 {%endblock content%}

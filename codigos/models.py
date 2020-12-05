@@ -51,9 +51,9 @@ class Codigo(models.Model):
 	def __str__(self):
 		return '{}'.format(self.codigo)
 
-	def save(self):
+	def save(self, *args, **kwargs):
 		self.plan.contar_codigos_disponibles()
-		super(Codigo, self).save()
+		super(Codigo, self).save(*args, **kwargs)
 
 class Recarga(models.Model):
 	plan = models.ForeignKey(Plan)	

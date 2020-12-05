@@ -7,6 +7,7 @@
 	<div class="table-responsive text-center">
 		<table class="table">
 			<thead>
+				<th>Plan</th>
 				<th>Código</th>
 				<th>Teléfono</th>
 				<th>Precio</th>
@@ -17,6 +18,7 @@
 	{%for venta in ventas%}
 
 				<tr>
+					<td>{{venta.codigo.plan.duracion}} {%if venta.codigo.plan.unidad_duracion == "h"%}hora{%else%}dia{%endif%}{%if venta.codigo.plan.duracion > 1%}s{%endif%}</td>
 					<td>{{venta.codigo}}</td>
 					<td>{{venta.telefono}}</td>
 					<td>${{venta.codigo.plan.precio}} MXN</td>
