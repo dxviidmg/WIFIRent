@@ -48,22 +48,6 @@ class ListViewRecargas(View):
 		}
 		return render(request,template_name, context)
 
-
-class DetailViewPlan(DetailView):
-	model = Plan
-
-	def get_context_data(self, **kwargs):
-		context = super(DetailViewPlan, self).get_context_data(**kwargs)
-		context['recargas'] = Recarga.objects.filter(plan=self.object)
-
-		context['duracion'] = "hora"
-		if self.object.unidad_duracion == "d":
-			context['duracion'] = "dia"
-		if self.object.duracion > 1:
-			context['duracion'] = context['duracion'] + "s"
-#		print(self.object)
-		return context
-
 class CreateViewRecarga(SuccessMessageMixin, CreateView):
 	model = Recarga
 	fields = ['precio',]

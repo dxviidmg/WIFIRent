@@ -43,7 +43,7 @@
 				<th>Ancho de banda</th>
 				<th>Códigos disponibles</th>
 				
-				<th {%if request.user.puntodeventa%} colspan="3"{%else%} colspan="2" {%endif%}>Acciones</th>
+				<th {%if request.user.puntodeventa%} colspan="2"{%else%} colspan="1" {%endif%}>Acciones</th>
 				<th>Observaciones</th>				
 			</thead>
 			<tbody>
@@ -63,8 +63,6 @@
 					{%else%}
 					<td><a href="{%url 'codigos:CreateViewRecarga' plan.slug%}">Hacer recarga</a></td>
 					{%endif%}
-					<td><a href="{%url 'codigos:DetailViewPlan' plan.slug%}">Historial de recargas</a></td>	
-					
 					<td>{%if plan.observaciones %}{{plan.observaciones}} {%endif%}</td>	
 				</tr>
 	
