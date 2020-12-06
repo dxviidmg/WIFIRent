@@ -2,8 +2,6 @@
 
 {%block content%}
 
-
-	
 	<h2>Historial de recargas</h2>
 
 	<div class="table-responsive text-center">
@@ -17,23 +15,7 @@
 			</thead>
 			<tbody>
 
-	{%for recarga in recargas%}
 
-				<tr>
-					<td>${{recarga.precio}} MXN</td>
-					<td>{{recarga.cantidad}}</td>
-					<td>{{recarga.creacion}}</td>
-					<td>{{recarga.status}}</td>
-					<td>{%if recarga.fecha_de_pago%}{{recarga.fecha_de_pago}}{%endif%}</td>
-				</tr>
-	
-	{%empty%}
-	
-				<tr>
-					<td colspan="5">No hay recargas</td>
-				</tr>
-
-	{%endfor%}
 
 			</tbody>
 		</table>

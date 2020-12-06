@@ -40,12 +40,17 @@ class ListViewRecargas(View):
 	def get(self, request):
 		template_name = "codigos/recarga_list.html"
 		user = User.objects.filter(pk=request.user.pk)
+		print('user', user)
 		punto_venta = PuntoDeVenta.objects.filter(user=user)
+		print('punto_venta', punto_venta)
 		planes = Plan.objects.filter(punto_venta=punto_venta)
+		print('planes', planes)
 		recargas = Recarga.objects.filter(plan=planes)
+		print('recargas', recargas)
 		context = {
 			'recargas': recargas
 		}
+		print('context', context)
 		return render(request,template_name, context)
 
 class CreateViewRecarga(SuccessMessageMixin, CreateView):
