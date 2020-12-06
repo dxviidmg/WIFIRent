@@ -45,7 +45,7 @@ class ListViewRecargas(View):
 		print('punto_venta', punto_venta)
 		planes = Plan.objects.filter(punto_venta=punto_venta)
 		print('planes', planes)
-		recargas = Recarga.objects.filter(plan=planes)
+		recargas = Recarga.objects.filter(plan__in=planes)
 		print('recargas', recargas)
 		context = {
 			'recargas': recargas
