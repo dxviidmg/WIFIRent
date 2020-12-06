@@ -5,6 +5,8 @@ from django.views.generic.detail import DetailView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse
 import csv
+from django.views.generic import View
+from django.shortcuts import render
 
 #Creación de un plan
 class CreateViewPlan(CreateView):
@@ -34,20 +36,17 @@ class UpdateViewPlan(UpdateView):
 	def get_success_url(self):
    		return reverse('accounts:DetailViewPuntoDeVenta',args=(self.object.punto_venta.pk,))
 
-class DetailViewPlan(DetailView):
-	model = Plan
-
-	def get_context_data(self, **kwargs):
-		context = super(DetailViewPlan, self).get_context_data(**kwargs)
-		context['recargas'] = Recarga.objects.filter(plan=self.object)
-
-		context['duracion'] = "hora"
-		if self.object.unidad_duracion == "d":
-			context['duracion'] = "dia"
-		if self.object.duracion > 1:
-			context['duracion'] = context['duracion'] + "s"
-#		print(self.object)
-		return context
+class ListViewRecargas(View):
+	def get(self, request):
+		template_name = "codigos/recarga_list.html"
+		user = User.objects.filter(pk=request.user.pk)
+		punto_venta = PuntoDeVenta.objects.filter(user=user)
+		planes = Plan.objects.filter(punto_venta=punto_venta)
+		recargas = Recarga.objects.filter(plan=planes)
+		context = {
+			'recargas': recargas
+		}
+		return render(request,template_name, context)
 
 class CreateViewRecarga(SuccessMessageMixin, CreateView):
 	model = Recarga

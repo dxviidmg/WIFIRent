@@ -10,10 +10,19 @@ import string
 unidad_duracion_choices = (("h", "Hora(s)"), ("d", "Dia(s)"))
 
 class Plan(models.Model):
+	unidad_velocidad_choices = (
+		("Kb", "Kb"),
+		("Mb", "Mb")
+	)
 	punto_venta = models.ForeignKey(PuntoDeVenta)	
 	duracion = models.IntegerField(verbose_name='Duración')
 	unidad_duracion = models.CharField(max_length=1, choices=unidad_duracion_choices, verbose_name='Unidad de tiempo')
 	precio = models.DecimalField(max_digits=6,decimal_places=2)
+	velocidad_descarga = models.IntegerField(default=1)
+	unidad_velocidad_descarga = models.CharField(max_length=2, choices=unidad_velocidad_choices, default="Mb")
+	velocidad_subida = models.IntegerField(default=256)
+	unidad_velocidad_subida = models.CharField(max_length=2, choices=unidad_velocidad_choices, default="kb")
+	observaciones = models.TextField(null=True, blank=True)
 	codigos_disponibles = models.IntegerField(default=0)
 	slug = models.SlugField(max_length=40, blank=True, unique=True)
 
@@ -56,10 +65,18 @@ class Codigo(models.Model):
 		super(Codigo, self).save(*args, **kwargs)
 
 class Recarga(models.Model):
+	status_choices = (
+		("Pendiente de pago", "Pendiente de pago"),
+		("Pagado", "Pagado")
+	)
+
 	plan = models.ForeignKey(Plan)	
 	precio = models.DecimalField(max_digits=6,decimal_places=2)	
 	cantidad = models.IntegerField(null=True, blank=True)	
 	creacion = models.DateTimeField(default=timezone.now)
+	status = models.CharField(max_length=20, choices=status_choices, default="Pendiente de pago")
+	fecha_de_pago = models.DateTimeField(null=True, blank=True)
+	
 	autor = models.ForeignKey(User)
 
 	def __str__(self):
