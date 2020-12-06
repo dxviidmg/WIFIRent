@@ -20,9 +20,17 @@ from accounts import urls as accountsUrls
 from codigos import urls as codigosUrls
 from ventas import urls as ventasUrls
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(accountsUrls, namespace="accounts")),
     url(r'^', include(codigosUrls, namespace="codigos")),
     url(r'^', include(ventasUrls, namespace="ventas")),
 ]
+
+ 
+#Media
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
