@@ -40,9 +40,11 @@
 			<thead>
 				<th>Duración</th>
 				<th>Precio</th>
+				<th>Ancho de banda</th>
 				<th>Códigos disponibles</th>
 				
 				<th {%if request.user.puntodeventa%} colspan="3"{%else%} colspan="2" {%endif%}>Acciones</th>
+				<th>Observaciones</th>				
 			</thead>
 			<tbody>
 
@@ -50,6 +52,7 @@
 				<tr>
 					<td>{%if plan.contar_codigos_disponibles%}{{plan.contar_codigos_disponibles}}{%endif%}{{plan.duracion}} {%if plan.unidad_duracion == "h"%}hora{%else%}dia{%endif%}{%if plan.duracion > 1%}s{%endif%}</td>
 					<td>${{plan.precio}} MXN</td>
+					<td>{{plan.velocidad_descarga}} {{plan.unidad_velocidad_descarga}} / {{plan.velocidad_subida}} {{plan.unidad_velocidad_subida}}</td>
 					<td> {{plan.codigos_disponibles}}</td>
 
 					{%if request.user.puntodeventa%}
@@ -61,6 +64,8 @@
 					<td><a href="{%url 'codigos:CreateViewRecarga' plan.slug%}">Hacer recarga</a></td>
 					{%endif%}
 					<td><a href="{%url 'codigos:DetailViewPlan' plan.slug%}">Historial de recargas</a></td>	
+					
+					<td>{%if plan.observaciones %}{{plan.observaciones}} {%endif%}</td>	
 				</tr>
 	
 	{%empty%}
