@@ -21,3 +21,10 @@ class RecargaAdmin(admin.ModelAdmin):
 	list_filter = ['plan']
 
 admin.site.register(Recarga, RecargaAdmin)
+
+class PagoAdmin(admin.ModelAdmin):
+	date_hierarchy = 'creacion'
+	list_display = ['fecha']
+	list_filter = ['fecha']
+
+admin.site.register(Pago, PagoAdmin)

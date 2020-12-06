@@ -21,8 +21,8 @@
 					<td>${{recarga.precio}} MXN</td>
 					<td>{{recarga.cantidad}}</td>
 					<td>{{recarga.creacion}}</td>
-					<td>{{recarga.status}}</td>
-					<td>{%if recarga.fecha_de_pago%}{{recarga.fecha_de_pago}}{%endif%}</td>
+					<td>{%if recarga.pago%} Pagado{%else%}Pendiente de pago{%endif%}</td>
+					<td>{%if recarga.pago%} {{recarga.pago.fecha}}{%endif%}</td>
 				</tr>
 	
 	{%empty%}

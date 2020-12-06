@@ -21,7 +21,7 @@ class Plan(models.Model):
 	velocidad_descarga = models.IntegerField(default=1)
 	unidad_velocidad_descarga = models.CharField(max_length=2, choices=unidad_velocidad_choices, default="Mb")
 	velocidad_subida = models.IntegerField(default=256)
-	unidad_velocidad_subida = models.CharField(max_length=2, choices=unidad_velocidad_choices, default="kb")
+	unidad_velocidad_subida = models.CharField(max_length=2, choices=unidad_velocidad_choices, default="Kb")
 	observaciones = models.TextField(null=True, blank=True)
 	codigos_disponibles = models.IntegerField(default=0)
 	slug = models.SlugField(max_length=40, blank=True, unique=True)
@@ -64,6 +64,13 @@ class Codigo(models.Model):
 		self.plan.contar_codigos_disponibles()
 		super(Codigo, self).save(*args, **kwargs)
 
+class Pago(models.Model):
+	creacion = models.DateTimeField(default=timezone.now)
+	fecha = models.DateTimeField()
+	comprobante = models.FileField(upload_to ='uploads/%Y/%m/%d/', null=True, blank=True) 
+	observaciones = models.TextField(null=True, blank=True)
+	cantidad = models.DecimalField(max_digits=6,decimal_places=2)
+	
 class Recarga(models.Model):
 	status_choices = (
 		("Pendiente de pago", "Pendiente de pago"),
@@ -73,11 +80,9 @@ class Recarga(models.Model):
 	plan = models.ForeignKey(Plan)	
 	precio = models.DecimalField(max_digits=6,decimal_places=2)	
 	cantidad = models.IntegerField(null=True, blank=True)	
-	creacion = models.DateTimeField(default=timezone.now)
-	status = models.CharField(max_length=20, choices=status_choices, default="Pendiente de pago")
-	fecha_de_pago = models.DateTimeField(null=True, blank=True)
-	
+	creacion = models.DateTimeField(default=timezone.now)	
 	autor = models.ForeignKey(User)
+	pago = models.ForeignKey(Pago, null=True, blank=True)
 
 	def __str__(self):
 		return '{} {} {}'.format(self.precio, self.cantidad, self.creacion)	
