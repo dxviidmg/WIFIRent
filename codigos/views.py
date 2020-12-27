@@ -11,7 +11,7 @@ from django.shortcuts import render
 #Creación de un plan
 class CreateViewPlan(CreateView):
 	model = Plan
-	fields = ['duracion', 'unidad_duracion', 'precio']
+	fields = ['duracion', 'unidad_duracion', 'precio', 'velocidad_descarga', 'unidad_velocidad_descarga', 'velocidad_subida', 'unidad_velocidad_subida', 'observaciones']
 
 	def get_success_url(self):
 		return reverse('accounts:DetailViewPuntoDeVenta',args=(self.object.punto_venta.pk,))
@@ -31,7 +31,10 @@ class CreateViewPlan(CreateView):
 class UpdateViewPlan(UpdateView):
 	model = Plan
 #	success_url = reverse_lazy('accounts:DetailViewPuntoVenta')
-	fields = ['duracion', 'unidad_duracion', 'precio']
+	fields = ['duracion', 'unidad_duracion', 'precio', 'velocidad_descarga', 'unidad_velocidad_descarga', 'velocidad_subida', 'unidad_velocidad_subida', 'observaciones']
+
+	
+	
 
 	def get_success_url(self):
    		return reverse('accounts:DetailViewPuntoDeVenta',args=(self.object.punto_venta.pk,))
