@@ -9,4 +9,5 @@ urlpatterns = [
 	url(r'^plan/editar/(?P<slug>[-\w]+)/$', views.UpdateViewPlan.as_view(), name="UpdateViewPlan"),
 	url(r'^plan/(?P<pk>[-\w]+)/nuevo$', views.CreateViewPlan.as_view(), name="CreateViewPlan"),
 	url(r'^recargas/$', views.ListViewRecargas.as_view(), name="ListViewRecargas"),
+	url(r'^tutorial-comision/$', views.TutorialComisionView.as_view(), name="TutorialComisionView"),
 	]

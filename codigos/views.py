@@ -33,9 +33,6 @@ class UpdateViewPlan(UpdateView):
 #	success_url = reverse_lazy('accounts:DetailViewPuntoVenta')
 	fields = ['duracion', 'unidad_duracion', 'precio', 'velocidad_descarga', 'unidad_velocidad_descarga', 'velocidad_subida', 'unidad_velocidad_subida', 'observaciones']
 
-	
-	
-
 	def get_success_url(self):
    		return reverse('accounts:DetailViewPuntoDeVenta',args=(self.object.punto_venta.pk,))
 
@@ -162,3 +159,9 @@ class CreateViewCodigo(SuccessMessageMixin, CreateView):
 		except:
 			ultimo_codigo = None
 		return context	
+
+
+class TutorialComisionView(View):
+	def get(self, request):
+		template = "codigos/tutorial_comision.html"
+		return render(request, template)
