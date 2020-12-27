@@ -1,0 +1,18 @@
+{% extends 'base.html'%}
+
+{%block content%}
+
+<h1>¿Como funcionan las comisiones?</h1>
+
+<p>Definamos los siguientes terminios: <br> Recarga: Compra de nuevos codigos. <br>Saldo acumulado: Dinero que no alcanzo para la ultima recarga pero se usara para la proxima recarga. <br> Comision: Porcentaje de ganancia</p>
+
+<p>Al monto de una recarga se le sumara el porcentaje de comisión correspodiente y el saldo acumulado, y de esta nueva cantidad se le daran la cantidad equivalente en códigos segun el precio de venta. En caso de que las recargas no sean exactas al numero de codigos dados, el dinero pendiente se guardará como saldo acumulado para la proxima recarga</p>
+
+<h2>Ejemplo</h2>
+
+<p>Datos iniciales <br> Comision: 15% <br> Saldo acomulado inicial: $0<br> Precio del codigo: $10 <br> Recarga de $100</p>
+
+<p>Recarga + comisión de recarga + saldo acumulado inicial--> 100.00 + 100.00x0.15 + 0.00 = 115.00</p>
+<p>nueva_cantidad = 115.00</p>
+<p>nueva_cantidad entre el precio de venta = 115.00 / 10.00 = 11 codigos + 5 pesos de saldo acumulado</p>
+{%endblock content%}
